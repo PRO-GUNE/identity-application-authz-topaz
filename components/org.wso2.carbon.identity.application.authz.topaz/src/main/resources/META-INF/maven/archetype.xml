@@ -1,0 +1,9 @@
+<archetype>
+  <id>org.wso2.carbon.identity.application.authz.topaz</id>
+  <sources>
+    <source>src/main/java/App.java</source>
+  </sources>
+  <testSources>
+    <source>src/test/java/AppTest.java</source>
+  </testSources>
+</archetype>

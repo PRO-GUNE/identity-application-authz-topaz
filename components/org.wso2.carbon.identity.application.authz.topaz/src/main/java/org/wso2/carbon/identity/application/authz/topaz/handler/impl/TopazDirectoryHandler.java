@@ -1,0 +1,80 @@
+/*
+ * Copyright (c) 2024, WSO2 LLC. (http://www.wso2.com).
+ *
+ * WSO2 LLC. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
+
+
+import org.json.JSONObject;
+import org.wso2.carbon.identity.application.authz.topaz.constants.TopazDirectoryConstants;
+import org.wso2.carbon.identity.application.authz.topaz.handler.abs.DirectoryInterface;
+import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRequestObject;
+
+import java.io.IOException;
+
+/**
+ * Handle sending the check and graph requests to the Topaz directory.
+ * Implements the Directory interface.
+ */
+public class TopazDirectoryHandler implements DirectoryInterface {
+    private final HttpsHandler httpsHandler;
+    private final boolean isDebug;
+
+    public TopazDirectoryHandler() {
+        this.isDebug = false;
+        this.httpsHandler = new HttpsHandler(false);
+    }
+
+    public TopazDirectoryHandler(boolean isDebug) {
+        this.isDebug = isDebug;
+        this.httpsHandler = new HttpsHandler(isDebug);
+    }
+
+    @Override
+    public boolean check(DirectoryRequestObject directoryRequestObject) {
+        JSONObject jsonObject = directoryRequestObject.parseToJSON();
+
+        try {
+            String response = httpsHandler.sendPOSTRequest(TopazDirectoryConstants.HTTPS_DIRECTORY_CHECK, jsonObject);
+            if (isDebug) {
+                System.out.println(response);
+            }
+            JSONObject checkObject = new JSONObject(response);
+            return checkObject.getBoolean("check");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public JSONObject graph(DirectoryRequestObject directoryRequestObject) {
+        JSONObject jsonObject = directoryRequestObject.parseToJSON();
+        String baseURL = TopazDirectoryConstants.HTTPS_DIRECTORY_GRAPH + String.format("/%s/%s/%s",
+                jsonObject.getString("object_type"),
+                jsonObject.getString("relation"),
+                jsonObject.getString("subject_type"));
+        String queryParams = directoryRequestObject.parseToQueryParamsForGraph();
+
+        String url = baseURL + queryParams;
+        try {
+            String response = httpsHandler.sendPOSTRequest(url, jsonObject);
+            return new JSONObject(response);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
