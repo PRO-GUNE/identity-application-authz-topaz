@@ -18,10 +18,21 @@
 
 package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class HttpsHandlerTest {
+
+    @Mock
+    HttpsHandler httpsHandler;
+
+    @BeforeEach
+    void setup(){
+        httpsHandler = new HttpsHandler();
+    }
 
     @Test
     void sendGETRequest() {

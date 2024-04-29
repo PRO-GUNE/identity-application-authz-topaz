@@ -18,11 +18,22 @@
 
 package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRelation;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TopazManagementHandlerTest {
+    @Mock
+    TopazManagementHandler topazManagementHandler;
+
+    @BeforeEach
+    void setup(){
+        topazManagementHandler = new TopazManagementHandler();
+    }
 
     @Test
     void getRelation() {

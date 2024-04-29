@@ -18,11 +18,21 @@
 
 package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TopazDirectoryHandlerTest {
+
+    @Mock
+    TopazDirectoryHandler topazDirectoryHandler;
+
+    @BeforeEach
+    void setup(){
+        topazDirectoryHandler = new TopazDirectoryHandler();
+    }
 
     @Test
     void check() {

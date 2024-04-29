@@ -18,15 +18,23 @@
 
 package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TopazAuthorizerHandlerTest {
 
+    @Mock TopazAuthorizerHandler topazAuthorizerHandler;
+
+    @BeforeEach
+    void setup(){
+        topazAuthorizerHandler = new TopazAuthorizerHandler();
+    }
+
     @Test
     void is() {
-
     }
 
     @Test
