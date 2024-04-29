@@ -18,16 +18,22 @@
 
 package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryObject;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazAuthorizerConstants.HTTPS_AUTHORIZER_POLICY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazDirectoryConstants.HTTPS_DIRECTORY_OBJECT;
 
 class HttpsHandlerTest {
 
     @Mock
-    HttpsHandler httpsHandler;
+    private HttpsHandler httpsHandler;
 
     @BeforeEach
     void setup(){
@@ -37,15 +43,34 @@ class HttpsHandlerTest {
     @Test
     void sendGETRequest() {
 
+        try {
+            String response = httpsHandler.sendGETRequest(HTTPS_AUTHORIZER_POLICY);
+            assertTrue(response.contains("result"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     void sendPOSTRequest() {
-
+        DirectoryObject directoryUserObject = new DirectoryObject("string","Jane Eyre", "user", "jane@the-eyres.com");
+        JSONObject jsonObject = directoryUserObject.parseToJSON();
+        try {
+            String response = httpsHandler.sendPOSTRequest(HTTPS_DIRECTORY_OBJECT, jsonObject);
+            assertTrue(response.contains("result"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     void sendDELETERequest() {
-
+        String url = HTTPS_DIRECTORY_OBJECT+"/"+"user"+"/"+"jane@the-eyres.com";
+        try {
+            int response = httpsHandler.sendDELETERequest(url);
+            assertEquals(200, response);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
