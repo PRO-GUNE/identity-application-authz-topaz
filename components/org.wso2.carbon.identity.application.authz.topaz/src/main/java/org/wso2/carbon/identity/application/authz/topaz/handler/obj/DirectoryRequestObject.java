@@ -19,7 +19,7 @@
 package org.wso2.carbon.identity.application.authz.topaz.handler.obj;
 
 import org.json.JSONObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.abs.DirectoryItemInterface;
+import org.wso2.carbon.identity.application.authz.topaz.handler.abs.JSONConvertibleInterface;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 /**
  * A class to model the authorization requests sent to the topaz directory.
  */
-public class DirectoryRequestObject implements DirectoryItemInterface {
+public class DirectoryRequestObject implements JSONConvertibleInterface {
     private final String subjectType;
     private final String subjectId;
     private final String subjectRelation;
@@ -98,7 +98,6 @@ public class DirectoryRequestObject implements DirectoryItemInterface {
         return jsonObject;
     }
 
-    @Override
     public String parseToQueryParams() {
         String queryString =
                 "?object_type=" + this.objectType + "&object_id=" + this.objectId + "&relation=" + this.relation +

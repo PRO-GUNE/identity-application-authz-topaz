@@ -19,24 +19,27 @@
 package org.wso2.carbon.identity.application.authz.topaz.handler.obj;
 
 import org.json.JSONObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.abs.JSONConvertibleInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazAuthorizerConstants.PATH_SEPARATOR_DOT;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.IDENTITY_CONTEXT;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.POLICY_CONTEXT;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.RESOURCE_CONTEXT;
 
 /**
- * A class to model the authorization requests sent to the topaz authorizer.
+ * A class to model the decision tree authorization requests sent to the topaz authorizer.
  */
-public class PolicyContextObject {
+public class DecisionTreeContextObject implements JSONConvertibleInterface {
     private final String identityType;
     private final String identityId;
     private final HashMap<String, Object> resourceContext;
     private final ArrayList<String> decisions;
     private final String policyPath;
     private final String pathSeparator;
-    private final Boolean isOptions;
 
     /**
      * @param identityType the type of identity of the subject. Can be one of three types:
@@ -50,38 +53,20 @@ public class PolicyContextObject {
      *                   evaluated. For the decisiontree endpoint this will be base path of the evaluated policies.
      * @param pathSeparator character used as the separating character when printing the path. Used with the
      *                      decisiontree endpoint.
-     * @param isOptions whether the pathSeparator attribute is included or not.
      */
-    public PolicyContextObject(
+    public DecisionTreeContextObject(
             String identityType,
             String identityId,
             HashMap<String, Object> resourceContext,
             ArrayList<String> decisions,
             String policyPath,
-            String pathSeparator,
-            Boolean isOptions) {
+            String pathSeparator) {
         this.identityType = identityType;
         this.identityId = identityId;
         this.resourceContext = resourceContext;
         this.decisions = decisions;
         this.policyPath = policyPath;
         this.pathSeparator = pathSeparator;
-        this.isOptions = isOptions;
-    }
-
-    public PolicyContextObject(
-            String identityType,
-            String identityId,
-            HashMap<String, Object> resourceContext,
-            ArrayList<String> decisions,
-            String policyPath) {
-        this.identityType = identityType;
-        this.identityId = identityId;
-        this.resourceContext = resourceContext;
-        this.decisions = decisions;
-        this.policyPath = policyPath;
-        this.pathSeparator = PATH_SEPARATOR_DOT;
-        this.isOptions = false;
     }
 
     /**
@@ -91,6 +76,9 @@ public class PolicyContextObject {
      *         "type": "IDENTITY_TYPE_SUB",
      *         "identity": "jane@the-eyres.com"
      *     },
+     *     "options": {
+     *         "path_separator": "PATH_SEPARATOR_DOT"
+     *     },
      *     "resource_context": {
      *         "app_id": "eyre-app"
      *     },
@@ -98,30 +86,27 @@ public class PolicyContextObject {
      *         "decisions": [
      *             "allowed"
      *         ],
-     *         "path": "policies.GET.app.__id"
+     *         "path": ""
      *     }
      * }
-     *
      */
     public JSONObject parseToJSON() {
         JSONObject jsonObject = new JSONObject();
         HashMap<String, Object> identityContext = new LinkedHashMap<>();
         identityContext.put("type", this.identityType);
         identityContext.put("identity", this.identityId);
-        jsonObject.put("identity_context", identityContext);
+        jsonObject.put(IDENTITY_CONTEXT, identityContext);
 
-        if (this.isOptions) {
-            HashMap<String, Object> options = new LinkedHashMap<>();
-            identityContext.put("path_separator", this.pathSeparator);
-            jsonObject.put("options", options);
-        }
+        HashMap<String, Object> options = new LinkedHashMap<>();
+        identityContext.put("path_separator", this.pathSeparator);
+        jsonObject.put("options", options);
 
-        jsonObject.put("resource_context", this.resourceContext);
+        jsonObject.put(RESOURCE_CONTEXT, this.resourceContext);
 
         HashMap<String, Object> policyContext = new HashMap<>();
         policyContext.put("decisions", this.decisions);
         policyContext.put("path", this.policyPath);
-        jsonObject.put("policy_context", policyContext);
+        jsonObject.put(POLICY_CONTEXT, policyContext);
 
         return jsonObject;
     }

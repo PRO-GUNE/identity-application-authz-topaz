@@ -19,18 +19,23 @@
 package org.wso2.carbon.identity.application.authz.topaz.handler.obj;
 
 import org.json.JSONObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.abs.DirectoryItemInterface;
+import org.wso2.carbon.identity.application.authz.topaz.handler.abs.JSONConvertibleInterface;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.DISPLAY_NAME_KEY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.ETAG_KEY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.OBJECT_ID_KEY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.OBJECT_TYPE_KEY;
+
 /**
  * A class to capture the objects in the Topaz directory.
  * Has the attributes that are required to create a directory object in the Topaz authorizer.
  */
-public class DirectoryObject implements DirectoryItemInterface {
+public class DirectoryObject implements JSONConvertibleInterface {
     private final String etag;
     private final String displayName;
     private final String objectType;
@@ -50,10 +55,11 @@ public class DirectoryObject implements DirectoryItemInterface {
     }
 
     public DirectoryObject(JSONObject jsonObject) {
-        this.etag = jsonObject.getString("etag");
-        this.displayName = jsonObject.getString("displayName");
-        this.objectId = jsonObject.getString("id");
-        this.objectType = jsonObject.getString("type");
+        JSONObject result = jsonObject.getJSONObject("result");
+        this.etag = result.getString(ETAG_KEY);
+        this.displayName = result.getString(DISPLAY_NAME_KEY);
+        this.objectId = result.getString("id");
+        this.objectType = result.getString("type");
     }
 
     /**
@@ -71,19 +77,23 @@ public class DirectoryObject implements DirectoryItemInterface {
     public JSONObject parseToJSON() {
         JSONObject jsonObject = new JSONObject();
         HashMap<String, Object> object = new LinkedHashMap<>();
-        object.put("etag", this.etag);
-        object.put("display_name", this.displayName);
-        object.put("id", this.objectId);
-        object.put("type", this.objectType);
+        object.put(ETAG_KEY, etag);
+        object.put(DISPLAY_NAME_KEY, displayName);
+        object.put("id", objectId);
+        object.put("type", objectType);
 
         jsonObject.put("object", object);
 
         return jsonObject;
     }
 
-    @Override
     public String parseToQueryParams() {
-        String queryString = String.format("?object_type=%s&object_id=%s", this.objectType, this.objectId);
+        String queryString = String.format("?%s=%s&%s=%s", OBJECT_TYPE_KEY, objectType, OBJECT_ID_KEY, objectId);
         return URLEncoder.encode(queryString, StandardCharsets.UTF_8);
+    }
+
+    public String parseToPathParams() {
+        String pathString = String.format("/%s/%s", objectType, objectId);
+        return URLEncoder.encode(pathString, StandardCharsets.UTF_8);
     }
 }

@@ -18,6 +18,7 @@
 
 package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -25,6 +26,7 @@ import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryObj
 import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRelation;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazDirectoryConstants.HTTPS_DIRECTORY_OBJECT;
 
 class TopazManagementHandlerTest {
     @Mock
@@ -37,36 +39,60 @@ class TopazManagementHandlerTest {
 
     @Test
     void getRelation() {
-
+        DirectoryRelation directoryIdentityUserRelation = new DirectoryRelation("string", "jane@the-eyres.com", "identity", "identifier", "jane@the-eyres.com", "user");
+        DirectoryRelation res = topazManagementHandler.getRelation(directoryIdentityUserRelation);
+        assertNotNull(res);
     }
 
     @Test
     void createRelation() {
+        // Create a new object
+        DirectoryObject directoryUserObject = new DirectoryObject("string","Jane Eyre", "user", "jane@the-eyres.com");
+        topazManagementHandler.createObject(directoryUserObject);
 
+        // Create a new identity
+        DirectoryObject directoryIdentityObject = new DirectoryObject("string","jane@the-eyres.com", "identity", "jane@the-eyres.com");
+        topazManagementHandler.createObject(directoryIdentityObject);
+
+        // Create an identity-user relation
+        DirectoryRelation directoryIdentityUserRelation = new DirectoryRelation("string", "jane@the-eyres.com", "identity", "identifier", "jane@the-eyres.com", "user");
+        boolean res = topazManagementHandler.createRelation(directoryIdentityUserRelation);
+        assertTrue(res);
     }
 
     @Test
     void deleteRelation() {
-
+        DirectoryRelation directoryIdentityUserRelation = new DirectoryRelation("string", "jane@the-eyres.com", "identity", "identifier", "jane@the-eyres.com", "user");
+        boolean res = topazManagementHandler.deleteRelation(directoryIdentityUserRelation);
+        assertTrue(res);
     }
 
     @Test
     void getObject() {
-
+        // Create a new object
+        DirectoryObject directoryUserObject = new DirectoryObject("string","Jane Eyre", "user", "jane@the-eyres.com");
+        DirectoryObject res = topazManagementHandler.getObject(directoryUserObject);
+        assertNotNull(res);
     }
 
     @Test
     void createObject() {
-
+        // Create a new object
+        DirectoryObject directoryUserObject = new DirectoryObject("string","Jane Eyre", "user", "jane@the-eyres.com");
+        boolean res = topazManagementHandler.createObject(directoryUserObject);
+        assertTrue(res);
     }
 
     @Test
     void deleteObject() {
-
+        DirectoryObject directoryUserObject = new DirectoryObject("string","Jane Eyre", "user", "jane@the-eyres.com");
+        boolean res = topazManagementHandler.deleteObject(directoryUserObject);
+        assertTrue(res);
     }
 
     @Test
     void getPolicies() {
-
+        JSONObject jsonObject = topazManagementHandler.getPolicies();
+        assertNotNull(jsonObject.get("result"));
     }
 }

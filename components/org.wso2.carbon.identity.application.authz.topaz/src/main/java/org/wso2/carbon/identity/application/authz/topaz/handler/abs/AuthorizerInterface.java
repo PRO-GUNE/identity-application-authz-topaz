@@ -19,7 +19,9 @@
 package org.wso2.carbon.identity.application.authz.topaz.handler.abs;
 
 import org.json.JSONObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.PolicyContextObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DecisionTreeContextObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.obj.IsContextObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.obj.QueryContextObject;
 
 /**
  * Interface used to implement the Topaz Authorizer.
@@ -30,25 +32,25 @@ public interface AuthorizerInterface {
     /**
      * Evaluate a single policy and retrieve the result.
      *
-     * @param policyContextObject the request sent to the Authorizer and evaluated.
+     * @param isContextObject the request sent to the Authorizer and evaluated.
      * @return a list of the decisions and the result of the evaluation of each decision.
      */
-    JSONObject is(PolicyContextObject policyContextObject);
+    JSONObject is(IsContextObject isContextObject);
 
     /**
      * Most abstract endpoint provided by the topaz authorizer.
      * Can execute a query sent with the request with the given context.
      *
-     * @param policyContextObject the request sent to the Authorizer and evaluated.
+     * @param queryContextObject the request sent to the Authorizer and evaluated.
      * @return a list of the results of the evaluation.
      */
-    JSONObject query(PolicyContextObject policyContextObject);
+    JSONObject query(QueryContextObject queryContextObject);
 
     /**
      * Evaluates all the policies at a given policy path for the requested decisions.
      *
-     * @param policyContextObject the request sent to the Authorizer and evaluated.
+     * @param decisionTreeContextObject the request sent to the Authorizer and evaluated.
      * @return a list of the results of the evaluation of the requested decisions for the policies.
      */
-    JSONObject decisiontree(PolicyContextObject policyContextObject);
+    JSONObject decisiontree(DecisionTreeContextObject decisionTreeContextObject);
 }

@@ -23,7 +23,7 @@ import org.json.JSONObject;
 /**
  * Interface for all Directory objects and relations.
  */
-public interface DirectoryItemInterface {
+public interface JSONConvertibleInterface {
 
     /**
      * Parse the entity into a JSON object.
@@ -31,11 +31,4 @@ public interface DirectoryItemInterface {
      * @return A JSON object with the directory object or relation attributes parsed as a JSON.
      */
     JSONObject parseToJSON();
-
-    /**
-     * Parse the entity into query parameters structure.
-     *
-     * @return Formats the attributes in a query parameter format.
-     */
-    String parseToQueryParams();
 }

@@ -21,7 +21,9 @@ package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
 import org.json.JSONObject;
 import org.wso2.carbon.identity.application.authz.topaz.constants.TopazAuthorizerConstants;
 import org.wso2.carbon.identity.application.authz.topaz.handler.abs.AuthorizerInterface;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.PolicyContextObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DecisionTreeContextObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.obj.IsContextObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.obj.QueryContextObject;
 
 import java.io.IOException;
 
@@ -43,8 +45,8 @@ public class TopazAuthorizerHandler implements AuthorizerInterface {
     }
 
     @Override
-    public JSONObject is(PolicyContextObject policyContextObject) {
-        JSONObject jsonObject = policyContextObject.parseToJSON();
+    public JSONObject is(IsContextObject isContextObject) {
+        JSONObject jsonObject = isContextObject.parseToJSON();
         try {
             String response = httpsHandler.sendPOSTRequest(TopazAuthorizerConstants.HTTPS_AUTHORIZER_IS, jsonObject);
             if (isDebug) {
@@ -57,8 +59,8 @@ public class TopazAuthorizerHandler implements AuthorizerInterface {
     }
 
     @Override
-    public JSONObject query(PolicyContextObject policyContextObject) {
-        JSONObject jsonObject = policyContextObject.parseToJSON();
+    public JSONObject query(QueryContextObject queryContextObject) {
+        JSONObject jsonObject = queryContextObject.parseToJSON();
         try {
             String response = httpsHandler.sendPOSTRequest(TopazAuthorizerConstants.HTTPS_AUTHORIZER_QUERY, jsonObject);
             if (isDebug) {
@@ -71,8 +73,8 @@ public class TopazAuthorizerHandler implements AuthorizerInterface {
     }
 
     @Override
-    public JSONObject decisiontree(PolicyContextObject policyContextObject) {
-        JSONObject jsonObject = policyContextObject.parseToJSON();
+    public JSONObject decisiontree(DecisionTreeContextObject decisionTreeContextObject) {
+        JSONObject jsonObject = decisionTreeContextObject.parseToJSON();
         try {
             String response = httpsHandler.sendPOSTRequest(TopazAuthorizerConstants.HTTPS_AUTHORIZER_DECISIONTREE,
                     jsonObject);

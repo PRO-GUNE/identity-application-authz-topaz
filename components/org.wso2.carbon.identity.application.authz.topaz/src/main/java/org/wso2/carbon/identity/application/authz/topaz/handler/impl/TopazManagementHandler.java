@@ -22,7 +22,6 @@ import org.json.JSONObject;
 import org.wso2.carbon.identity.application.authz.topaz.handler.abs.ManagementInterface;
 import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryObject;
 import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRelation;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRequestObject;
 
 import java.io.IOException;
 
@@ -49,12 +48,13 @@ public class TopazManagementHandler implements ManagementInterface {
     }
 
     @Override
-    public DirectoryRelation getRelation(DirectoryRequestObject directoryRequestObject) {
-        String queryParams = directoryRequestObject.parseToQueryParams();
+    public DirectoryRelation getRelation(DirectoryRelation directoryRelation) {
+        String queryParams = directoryRelation.parseToQueryParams();
         String url = HTTPS_DIRECTORY_RELATION + queryParams;
 
         try {
             String response =  httpsHandler.sendGETRequest(url);
+            System.out.println(response);
             JSONObject directoryRelationJSON = new JSONObject(response);
             return new DirectoryRelation(directoryRelationJSON);
         } catch (IOException e) {
@@ -63,7 +63,7 @@ public class TopazManagementHandler implements ManagementInterface {
     }
 
     @Override
-    public void createRelation(DirectoryRelation directoryRelation) {
+    public boolean createRelation(DirectoryRelation directoryRelation) {
         JSONObject jsonObject = directoryRelation.parseToJSON();
         if (isDebug) {
             System.out.println(jsonObject.toString());
@@ -71,14 +71,15 @@ public class TopazManagementHandler implements ManagementInterface {
 
         try {
             httpsHandler.sendPOSTRequest(HTTPS_DIRECTORY_RELATION, jsonObject);
+            return true;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public boolean deleteRelation(DirectoryRequestObject directoryRequestObject) {
-        String queryParams = directoryRequestObject.parseToQueryParams();
+    public boolean deleteRelation(DirectoryRelation directoryRelation) {
+        String queryParams = directoryRelation.parseToQueryParams();
         String url = HTTPS_DIRECTORY_RELATION + queryParams;
 
         try {
@@ -90,9 +91,9 @@ public class TopazManagementHandler implements ManagementInterface {
     }
 
     @Override
-    public DirectoryObject getObject(DirectoryRequestObject directoryRequestObject) {
-        String queryParams = directoryRequestObject.parseToQueryParams();
-        String url = HTTPS_DIRECTORY_OBJECT + queryParams;
+    public DirectoryObject getObject(DirectoryObject directoryObject) {
+        String pathParams = directoryObject.parseToPathParams();
+        String url = HTTPS_DIRECTORY_OBJECT + pathParams;
 
         try {
             String response = httpsHandler.sendGETRequest(url);
@@ -104,7 +105,7 @@ public class TopazManagementHandler implements ManagementInterface {
     }
 
     @Override
-    public void createObject(DirectoryObject directoryObject) {
+    public boolean createObject(DirectoryObject directoryObject) {
         JSONObject jsonObject = directoryObject.parseToJSON();
         if (isDebug) {
             System.out.println(jsonObject.toString());
@@ -112,15 +113,16 @@ public class TopazManagementHandler implements ManagementInterface {
 
         try {
             httpsHandler.sendPOSTRequest(HTTPS_DIRECTORY_OBJECT, jsonObject);
+            return true;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public boolean deleteObject(DirectoryRequestObject directoryRequestObject) {
-        String queryParams = directoryRequestObject.parseToQueryParams();
-        String url = HTTPS_DIRECTORY_OBJECT + queryParams;
+    public boolean deleteObject(DirectoryObject directoryObject) {
+        String pathParams = directoryObject.parseToPathParams();
+        String url = HTTPS_DIRECTORY_OBJECT + pathParams;
 
         try {
             int status = this.httpsHandler.sendDELETERequest(url);
@@ -133,8 +135,8 @@ public class TopazManagementHandler implements ManagementInterface {
     @Override
     public JSONObject getPolicies() {
         try {
-            this.httpsHandler.sendGETRequest(HTTPS_AUTHORIZER_POLICY);
-            return null;
+            String res = httpsHandler.sendGETRequest(HTTPS_AUTHORIZER_POLICY);
+            return new JSONObject(res);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
