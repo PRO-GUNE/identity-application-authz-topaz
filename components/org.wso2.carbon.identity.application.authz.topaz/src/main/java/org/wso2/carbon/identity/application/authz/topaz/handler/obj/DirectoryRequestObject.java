@@ -23,7 +23,14 @@ import org.wso2.carbon.identity.application.authz.topaz.handler.abs.JSONConverti
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+
+
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.OBJECT_ID_KEY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.OBJECT_TYPE_KEY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.RELATION_KEY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.SUBJECT_ID_KEY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.SUBJECT_RELATION_KEY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.SUBJECT_TYPE_KEY;
 
 /**
  * A class to model the authorization requests sent to the topaz directory.
@@ -46,29 +53,6 @@ public class DirectoryRequestObject implements JSONConvertibleInterface {
         this.subjectType = subjectType;
         this.subjectId = subjectId;
         this.subjectRelation = subjectRelation;
-        this.objectType = objectType;
-        this.objectId = objectId;
-        this.relation = relation;
-    }
-
-    public DirectoryRequestObject(
-            String subjectType,
-            String subjectId,
-            String subjectRelation,
-            String objectType,
-            String relation) {
-        this.subjectType = subjectType;
-        this.subjectId = subjectId;
-        this.subjectRelation = subjectRelation;
-        this.objectType = objectType;
-        this.objectId = "";
-        this.relation = relation;
-    }
-
-    public DirectoryRequestObject(String subjectType, String objectType, String objectId, String relation) {
-        this.subjectType = subjectType;
-        this.subjectId = "";
-        this.subjectRelation = "";
         this.objectType = objectType;
         this.objectId = objectId;
         this.relation = relation;
@@ -99,25 +83,19 @@ public class DirectoryRequestObject implements JSONConvertibleInterface {
     }
 
     public String parseToQueryParams() {
-        String queryString =
-                "?object_type=" + this.objectType + "&object_id=" + this.objectId + "&relation=" + this.relation +
-                        "&subject_type=" + this.subjectType + "&subject_id=" + this.subjectId + "&subject_relation=" +
-                        this.subjectRelation;
-        return URLEncoder.encode(queryString, StandardCharsets.UTF_8);
+      return String.format("?%s=%s", OBJECT_TYPE_KEY, URLEncoder.encode(objectType, StandardCharsets.UTF_8)) +
+                    String.format("&%s=%s", OBJECT_ID_KEY, URLEncoder.encode(objectId, StandardCharsets.UTF_8)) +
+                    String.format("&%s=%s",RELATION_KEY, URLEncoder.encode(relation, StandardCharsets.UTF_8)) +
+                    String.format("&%s=%s", SUBJECT_TYPE_KEY, URLEncoder.encode(subjectType, StandardCharsets.UTF_8)) +
+                    String.format("&%s=%s", SUBJECT_ID_KEY, URLEncoder.encode(subjectId, StandardCharsets.UTF_8)) +
+                    String.format("&%s=%s", SUBJECT_RELATION_KEY, URLEncoder.encode(subjectRelation, StandardCharsets.UTF_8));
+
     }
 
     public String parseToQueryParamsForGraph() {
-        ArrayList<String> keys = new ArrayList<>();
-        keys.add("object_id");
-        keys.add("subject_id");
-        keys.add("subject_relation");
+        return String.format("?%s=%s", OBJECT_ID_KEY, URLEncoder.encode(objectId, StandardCharsets.UTF_8)) +
+                String.format("&%s=%s", SUBJECT_ID_KEY, URLEncoder.encode(subjectId, StandardCharsets.UTF_8)) +
+                String.format("&%s=%s", SUBJECT_RELATION_KEY, URLEncoder.encode(subjectRelation, StandardCharsets.UTF_8));
 
-        StringBuilder queryString = new StringBuilder("?");
-        JSONObject jsonObject = this.parseToJSON();
-        for (String key : keys) {
-            queryString.append(String.format("%s=%s&", key, jsonObject.getString(key)));
-        }
-
-        return URLEncoder.encode(queryString.toString(), StandardCharsets.UTF_8);
     }
 }

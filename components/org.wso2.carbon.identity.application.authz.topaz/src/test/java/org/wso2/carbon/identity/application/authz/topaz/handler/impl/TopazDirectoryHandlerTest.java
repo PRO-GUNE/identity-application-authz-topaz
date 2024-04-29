@@ -18,9 +18,11 @@
 
 package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRequestObject;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,11 +38,16 @@ class TopazDirectoryHandlerTest {
 
     @Test
     void check() {
-
+        DirectoryRequestObject directoryRequestObject = new DirectoryRequestObject("user", "jane@the-eyres.com", "", "resource", "hello-resource", "reader");
+        boolean res = topazDirectoryHandler.check(directoryRequestObject);
+        assertTrue(res);
     }
 
     @Test
     void graph() {
-
+        DirectoryRequestObject directoryRequestObject = new DirectoryRequestObject("user", "", "", "resource", "hello-resource", "reader");
+        JSONObject res = topazDirectoryHandler.graph(directoryRequestObject);
+        System.out.println(res.get("results").toString());
+        assertNotEquals(res.get("results").toString(), "[]");
     }
 }

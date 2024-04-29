@@ -26,6 +26,10 @@ import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryReq
 
 import java.io.IOException;
 
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.OBJECT_TYPE_KEY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.RELATION_KEY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.SUBJECT_TYPE_KEY;
+
 /**
  * Handle sending the check and graph requests to the Topaz directory.
  * Implements the Directory interface.
@@ -64,14 +68,14 @@ public class TopazDirectoryHandler implements DirectoryInterface {
     public JSONObject graph(DirectoryRequestObject directoryRequestObject) {
         JSONObject jsonObject = directoryRequestObject.parseToJSON();
         String baseURL = TopazDirectoryConstants.HTTPS_DIRECTORY_GRAPH + String.format("/%s/%s/%s",
-                jsonObject.getString("object_type"),
-                jsonObject.getString("relation"),
-                jsonObject.getString("subject_type"));
+                jsonObject.getString(OBJECT_TYPE_KEY),
+                jsonObject.getString(RELATION_KEY),
+                jsonObject.getString(SUBJECT_TYPE_KEY));
         String queryParams = directoryRequestObject.parseToQueryParamsForGraph();
 
         String url = baseURL + queryParams;
         try {
-            String response = httpsHandler.sendPOSTRequest(url, jsonObject);
+            String response = httpsHandler.sendGETRequest(url);
             return new JSONObject(response);
         } catch (IOException e) {
             throw new RuntimeException(e);
