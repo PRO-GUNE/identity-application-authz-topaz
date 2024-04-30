@@ -58,9 +58,9 @@ public class QueryContextObject implements JSONConvertibleInterface {
      * @param metrics enables or disables sending metrics data in the response.
      * @param traceSummary enables or disables sending trace_summary data in the response.
      */
-    public QueryContextObject(String identityType, String identityId, HashMap<String, Object> resourceContext, String query,
-                              HashMap<String, Object> input, ArrayList<String> decisions, String policyPath,
-                              boolean metrics, boolean traceSummary) {
+    public QueryContextObject(String identityType, String identityId, HashMap<String, Object> resourceContext,
+                              String query, HashMap<String, Object> input, ArrayList<String> decisions,
+                              String policyPath, boolean metrics, boolean traceSummary) {
         this.query = query;
         this.input = input;
         this.identityType = identityType;

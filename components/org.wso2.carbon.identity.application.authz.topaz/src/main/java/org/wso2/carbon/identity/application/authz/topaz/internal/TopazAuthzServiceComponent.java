@@ -24,21 +24,20 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.wso2.carbon.identity.application.authz.topaz.handler.abs.AuthorizerInterface;
-import org.wso2.carbon.identity.application.authz.topaz.handler.impl.TopazAuthorizerHandler;
+import org.wso2.carbon.identity.application.authz.topaz.handler.impl.TopazAuthzHandler;
 
 @Component(
         name = "identity.application.authz.topaz.component",
         immediate = true
 )
-public class TopazAuthorizerServiceComponent {
-    private static final Log log = LogFactory.getLog(TopazAuthorizerServiceComponent.class);
+public class TopazAuthzServiceComponent {
+    private static final Log log = LogFactory.getLog(TopazAuthzServiceComponent.class);
 
     @Activate
-    protected void activate(ComponentContext ctxt) {
+    protected void activate(ComponentContext context) {
         try {
-            TopazAuthorizerHandler topazAuthorizerHandler = new TopazAuthorizerHandler();
-            ctxt.getBundleContext().registerService(AuthorizerInterface.class, topazAuthorizerHandler, null);
+            TopazAuthzHandler topazAuthzHandler = new TopazAuthzHandler();
+            context.getBundleContext().registerService(TopazAuthzHandler.class.getName(), topazAuthzHandler, null);
             if (log.isDebugEnabled()) {
                 log.debug("Application Topaz authorizer handler bundle is activated");
             }

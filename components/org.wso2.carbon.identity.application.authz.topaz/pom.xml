@@ -7,6 +7,7 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
+    <packaging>bundle</packaging>
     <artifactId>org.wso2.carbon.identity.application.authz.topaz</artifactId>
     <name>Archetype - org.wso2.carbon.identity.application.authz.topaz</name>
     <url>http://maven.apache.org</url>
@@ -35,21 +36,13 @@
             <artifactId>mockito-all</artifactId>
             <version>2.0.2-beta</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.osgi/org.osgi.framework -->
+        <!-- https://mvnrepository.com/artifact/org.apache.felix/maven-bundle-plugin -->
         <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.framework</artifactId>
-            <version>1.10.0</version>
-            <scope>provided</scope>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>maven-bundle-plugin</artifactId>
+            <version>5.1.9</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.osgi/org.osgi.service.component -->
-        <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.service.component</artifactId>
-            <version>1.5.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.osgi/org.osgi.service.component.annotations -->
+
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.service.component.annotations</artifactId>
@@ -68,6 +61,7 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
+                <version>5.1.9</version>
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
@@ -79,16 +73,14 @@
                             org.wso2.carbon.identity.application.authz.topaz.internal
                         </Private-Package>
                         <Import-Package>
-                            org.apache.commons.lang,
-                            org.apache.commons.logging,
-                            org.osgi.framework,
-                            org.osgi.service.component,
+                            org.osgi.framework; version="${osgi.framework.imp.pkg.version.range}",
+                            org.osgi.service.component; version="${osgi.service.component.imp.pkg.version.range}",
                         </Import-Package>
                         <Export-Package>
-                            !org.wso2.carbon.identity.application.authz.topaz.internal;
-                            org.wso2.carbon.identity.application.authz.topaz.handler.impl,
-                            org.wso2.carbon.identity.application.authz.topaz.handler.obj,
-                            org.wso2.carbon.identity.application.authz.topaz.constants
+                            !org.wso2.carbon.identity.application.authz.topaz.internal,
+                            org.wso2.carbon.identity.application.authz.topaz.handler.impl;version="${identity.app.authz.topaz.pkg.exp.version}",
+                            org.wso2.carbon.identity.application.authz.topaz.handler.obj;version="${identity.app.authz.topaz.pkg.exp.version}",
+                            org.wso2.carbon.identity.application.authz.topaz.constants;version="${identity.app.authz.topaz.pkg.exp.version}",
                         </Export-Package>
                     </instructions>
                 </configuration>

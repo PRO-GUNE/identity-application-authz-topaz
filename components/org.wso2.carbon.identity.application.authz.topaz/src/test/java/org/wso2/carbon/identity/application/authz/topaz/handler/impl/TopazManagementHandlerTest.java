@@ -26,7 +26,6 @@ import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryObj
 import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRelation;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazDirectoryConstants.HTTPS_DIRECTORY_OBJECT;
 
 class TopazManagementHandlerTest {
     @Mock
