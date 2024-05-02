@@ -19,22 +19,17 @@
 package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
 import org.mockito.Mock;
 import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRequestObject;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.assertNotEquals;
+import static org.testng.Assert.assertTrue;
 
 class TopazDirectoryHandlerTest {
-
     @Mock
-    TopazDirectoryHandler topazDirectoryHandler;
-
-    @BeforeEach
-    void setup(){
-        topazDirectoryHandler = new TopazDirectoryHandler();
-    }
+    TopazDirectoryHandler topazDirectoryHandler = new TopazDirectoryHandler();
 
     @Test
     void check() {

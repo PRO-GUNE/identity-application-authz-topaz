@@ -19,16 +19,18 @@
 package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryObject;
 import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRelation;
 import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DecisionTreeContextObject;
 import org.wso2.carbon.identity.application.authz.topaz.handler.obj.IsContextObject;
 import org.wso2.carbon.identity.application.authz.topaz.handler.obj.QueryContextObject;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.mockito.Mock;
+
+import org.testng.annotations.Test;
+import static org.testng.Assert.assertNotEquals;
+import static org.testng.Assert.assertTrue;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,13 +40,10 @@ import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazAu
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazAuthorizerConstants.PATH_SEPARATOR_DOT;
 
 class TopazAuthorizerHandlerTest {
+    @Mock
+    TopazAuthorizerHandler topazAuthorizerHandler = new TopazAuthorizerHandler();
 
-    @Mock TopazAuthorizerHandler topazAuthorizerHandler;
-
-    @BeforeEach
     void setup(){
-        topazAuthorizerHandler = new TopazAuthorizerHandler();
-
         TopazManagementHandler topazManagementHandler = new TopazManagementHandler();
         // Create a new object
         DirectoryObject directoryUserObject = new DirectoryObject("string","Jane Eyre", "user", "jane@the-eyres.com");
@@ -100,13 +99,12 @@ class TopazAuthorizerHandlerTest {
 
     @Test
     void query() {
-        String query = """
-                x:=ds.check({"object_type": "resource",
-                "object_id": input.resource.resource_id,
-                "relation": "can_read",
-                "subject_type": "user",
-                "subject_id": input.user.id,
-                })""";
+        String query = "x:=ds.check({\"object_type\": \"resource\",\n" +
+                       "\"object_id\": input.resource.resource_id,\n" +
+                       "\"relation\": \"can_read\",\n" +
+                       "\"subject_type\": \"user\",\n" +
+                       "\"subject_id\": input.user.id,\n" +
+                       "})";
 
         HashMap<String, Object> input = new LinkedHashMap<>();
         HashMap<String, Object> hashMap = new LinkedHashMap<>();

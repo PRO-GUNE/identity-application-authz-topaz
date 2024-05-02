@@ -37,7 +37,7 @@ public class TopazAuthzServiceComponent {
     protected void activate(ComponentContext context) {
         try {
             TopazAuthzHandler topazAuthzHandler = new TopazAuthzHandler();
-            context.getBundleContext().registerService(TopazAuthzHandler.class.getName(), topazAuthzHandler, null);
+            context.getBundleContext().registerService(TopazAuthzHandler.class, topazAuthzHandler, null);
             if (log.isDebugEnabled()) {
                 log.debug("Application Topaz authorizer handler bundle is activated");
             }

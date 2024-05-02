@@ -19,26 +19,21 @@
 package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryObject;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazAuthorizerConstants.HTTPS_AUTHORIZER_POLICY;
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazDirectoryConstants.HTTPS_DIRECTORY_OBJECT;
 
 class HttpsHandlerTest {
 
     @Mock
-    private HttpsHandler httpsHandler;
-
-    @BeforeEach
-    void setup(){
-        httpsHandler = new HttpsHandler();
-    }
+    private HttpsHandler httpsHandler = new HttpsHandler();
 
     @Test
     void sendGETRequest() {

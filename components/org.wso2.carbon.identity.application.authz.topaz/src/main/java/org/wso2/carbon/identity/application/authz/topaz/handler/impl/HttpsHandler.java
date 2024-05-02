@@ -95,7 +95,7 @@ public class HttpsHandler {
         }
 
         // Get the response
-        try (var responseReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()))) {
+        try (BufferedReader responseReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()))) {
             StringBuilder response = new StringBuilder();
             String responseLine;
             while ((responseLine = responseReader.readLine()) != null) {
