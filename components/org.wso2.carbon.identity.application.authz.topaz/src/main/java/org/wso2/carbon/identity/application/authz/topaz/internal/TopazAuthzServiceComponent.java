@@ -20,6 +20,7 @@ package org.wso2.carbon.identity.application.authz.topaz.internal;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -37,7 +38,8 @@ public class TopazAuthzServiceComponent {
     protected void activate(ComponentContext context) {
         try {
             TopazAuthzHandler topazAuthzHandler = new TopazAuthzHandler();
-            context.getBundleContext().registerService(TopazAuthzHandler.class, topazAuthzHandler, null);
+            BundleContext bundleContext = context.getBundleContext();
+            bundleContext.registerService(TopazAuthzHandler.class, topazAuthzHandler, null);
             if (log.isDebugEnabled()) {
                 log.debug("Application Topaz authorizer handler bundle is activated");
             }

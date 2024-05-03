@@ -42,57 +42,183 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <identity.app.authz.topaz.pkg.exp.version>${project.version}</identity.app.authz.topaz.pkg.exp.version>
-        <maven.surefire.plugin.version>2.22.0</maven.surefire.plugin.version>
-        <osgi.service.component.imp.pkg.version.range>[1.2.0, 2.0.0)</osgi.service.component.imp.pkg.version.range>
-        <osgi.service.http.imp.pkg.version.range>[1.2.1, 2.0.0)</osgi.service.http.imp.pkg.version.range>
-        <osgi.framework.imp.pkg.version.range>[1.7.0, 2.0.0)</osgi.framework.imp.pkg.version.range>
+        <org.apache.commons.logging.version.range>[1.2,2)</org.apache.commons.logging.version.range>
+        <org.json.version.range>[3.0,4)</org.json.version.range>
+        <org.osgi.framework.version.range>org.osgi.framework</org.osgi.framework.version.range>
+        <org.osgi.service.component.version.range>[1.2,2)</org.osgi.service.component.version.range>
+
         <equinox.osgi.services.version>3.5.100.v20160504-1419</equinox.osgi.services.version>
-
-        <maven.bundle.plugin.version>3.2.0</maven.bundle.plugin.version>
-
         <json.wso2.version>3.0.0.wso2v4</json.wso2.version>
         <json.wso2.version.range>[3.0.0.wso2v1, 4.0.0)</json.wso2.version.range>
-        <json-smart.version>2.4.10</json-smart.version>
-        <commons-codec.version>1.16.0.wso2v1</commons-codec.version>
         <pax.logging.api.version>1.10.1</pax.logging.api.version>
+        <org.eclipse.osgi.version>3.9.1.v20130814-1242</org.eclipse.osgi.version>
+
+        <maven.bundle.plugin.version>3.2.0</maven.bundle.plugin.version>
+        <maven.buildnumber.plugin.version>1.4</maven.buildnumber.plugin.version>
+        <maven-war-plugin.version>3.3.1</maven-war-plugin.version>
+        <findsecbugs-plugin.version>1.10.1</findsecbugs-plugin.version>
 
         <junit.version>4.13.1</junit.version>
         <testng.version>6.9.10</testng.version>
         <mockito.version>2.28.2</mockito.version>
-
     </properties>
 
     <build>
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.22.2</version>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <version>${maven.bundle.plugin.version}</version>
+                    <extensions>true</extensions>
                     <configuration>
-                        <skipTests>true</skipTests>
+                        <obrRepository>NONE</obrRepository>
+                        <instructions>
+                            <SCM-Revision>${buildNumber}</SCM-Revision>
+                        </instructions>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildnumber-maven-plugin</artifactId>
+                    <version>${maven.buildnumber.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>create</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <doCheck>false</doCheck>
+                        <doUpdate>false</doUpdate>
+                    </configuration>
+                </plugin>
+<!--                <plugin>-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>-->
+<!--                    <artifactId>maven-checkstyle-plugin</artifactId>-->
+<!--                    <version>${maven.checkstyleplugin.version}</version>-->
+<!--                    <executions>-->
+<!--                        <execution>-->
+<!--                            <id>validate</id>-->
+<!--                            <phase>validate</phase>-->
+<!--                            <configuration>-->
+<!--                                <configLocation>-->
+<!--                                    https://raw.githubusercontent.com/wso2/code-quality-tools/v1.3/checkstyle/checkstyle.xml-->
+<!--                                </configLocation>-->
+<!--                                <suppressionsLocation>-->
+<!--                                    https://raw.githubusercontent.com/wso2/code-quality-tools/v1.3/checkstyle/suppressions.xml-->
+<!--                                </suppressionsLocation>-->
+<!--                                <encoding>UTF-8</encoding>-->
+<!--                                <consoleOutput>true</consoleOutput>-->
+<!--                                <failsOnError>true</failsOnError>-->
+<!--                                <includeTestSourceDirectory>true</includeTestSourceDirectory>-->
+<!--                            </configuration>-->
+<!--                            <goals>-->
+<!--                                <goal>check</goal>-->
+<!--                            </goals>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--                </plugin>-->
+<!--                <plugin>-->
+<!--                    <groupId>com.github.spotbugs</groupId>-->
+<!--                    <artifactId>spotbugs-maven-plugin</artifactId>-->
+<!--                    <version>${spotbugs-maven-plugin.version}</version>-->
+<!--                    <configuration>-->
+<!--                        <effort>Max</effort>-->
+<!--                        <threshold>Low</threshold>-->
+<!--                        <failOnError>true</failOnError>-->
+<!--                        <maxHeap>1024</maxHeap>-->
+<!--                        <plugins>-->
+<!--                            <plugin>-->
+<!--                                <groupId>com.h3xstream.findsecbugs</groupId>-->
+<!--                                <artifactId>findsecbugs-plugin</artifactId>-->
+<!--                                <version>${findsecbugs-plugin.version}</version>-->
+<!--                            </plugin>-->
+<!--                        </plugins>-->
+<!--                    </configuration>-->
+<!--                    <executions>-->
+<!--                        <execution>-->
+<!--                            <id>analyze-compile</id>-->
+<!--                            <phase>compile</phase>-->
+<!--                            <goals>-->
+<!--                                <goal>check</goal>-->
+<!--                            </goals>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--                </plugin>-->
             </plugins>
         </pluginManagement>
-    </build>
 
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <preparationGoals>clean install</preparationGoals>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>${maven.buildnumber.plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <!--This parameter disables doclint-->
+                            <doclint>none</doclint>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${maven-war-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.wso2.eclipse.osgi</groupId>
                 <artifactId>org.eclipse.osgi.services</artifactId>
                 <version>${equinox.osgi.services.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.osgi</groupId>
-                <artifactId>org.osgi.framework</artifactId>
-                <version>1.10.0</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-logging</groupId>
-                <artifactId>commons-logging</artifactId>
-                <version>1.3.1</version>
             </dependency>
             <dependency>
                 <groupId>org.json.wso2</groupId>
@@ -104,7 +230,12 @@
                 <artifactId>pax-logging-api</artifactId>
                 <version>${pax.logging.api.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.eclipse.osgi</groupId>
+                <artifactId>org.eclipse.osgi</artifactId>
+                <version>${org.eclipse.osgi.version}</version>
+                <scope>compile</scope>
+            </dependency>
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -121,21 +252,6 @@
                 <version>${mockito.version}</version>
                 <scope>test</scope>
             </dependency>
-
-
         </dependencies>
     </dependencyManagement>
-
-<!--    <distributionManagement>-->
-<!--        <repository>-->
-<!--            <id>nexus-releases</id>-->
-<!--            <name>WSO2 Nexus Release Repository</name>-->
-<!--            <url>https://maven.wso2.org/nexus/service/local/staging/deploy/maven2/</url>-->
-<!--        </repository>-->
-<!--        <snapshotRepository>-->
-<!--            <id>wso2.snapshots</id>-->
-<!--            <name>WSO2 Snapshot Repository</name>-->
-<!--            <url>https://maven.wso2.org/nexus/content/repositories/snapshots/</url>-->
-<!--        </snapshotRepository>-->
-<!--    </distributionManagement>-->
 </project>
