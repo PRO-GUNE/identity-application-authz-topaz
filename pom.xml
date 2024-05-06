@@ -44,7 +44,7 @@
         <identity.app.authz.topaz.pkg.exp.version>${project.version}</identity.app.authz.topaz.pkg.exp.version>
         <org.apache.commons.logging.version.range>[1.2,2)</org.apache.commons.logging.version.range>
         <org.json.version.range>[3.0,4)</org.json.version.range>
-        <org.osgi.framework.version.range>org.osgi.framework</org.osgi.framework.version.range>
+        <org.osgi.framework.version.range>[1.7,2)</org.osgi.framework.version.range>
         <org.osgi.service.component.version.range>[1.2,2)</org.osgi.service.component.version.range>
 
         <equinox.osgi.services.version>3.5.100.v20160504-1419</equinox.osgi.services.version>
