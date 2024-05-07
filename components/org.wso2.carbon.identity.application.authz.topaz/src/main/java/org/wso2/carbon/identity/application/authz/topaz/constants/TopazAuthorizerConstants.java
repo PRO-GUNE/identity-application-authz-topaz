@@ -18,6 +18,9 @@
 
 package org.wso2.carbon.identity.application.authz.topaz.constants;
 
+/**
+ * Class contains constants used by the Authorizer.
+ */
 public class TopazAuthorizerConstants {
     public static final String HTTPS_AUTHORIZER_POLICY = "https://localhost:8383/api/v2/policies";
 

@@ -32,16 +32,9 @@ import java.io.IOException;
  */
 public class TopazAuthorizerHandler implements AuthorizerInterface {
     private final HttpsHandler httpsHandler;
-    private final boolean isDebug;
 
     public TopazAuthorizerHandler() {
-        this.isDebug = false;
-        this.httpsHandler = new HttpsHandler(false);
-    }
-
-    public TopazAuthorizerHandler(boolean isDebug) {
-        this.isDebug = isDebug;
-        this.httpsHandler = new HttpsHandler(isDebug);
+        this.httpsHandler = new HttpsHandler();
     }
 
     @Override
@@ -49,9 +42,6 @@ public class TopazAuthorizerHandler implements AuthorizerInterface {
         JSONObject jsonObject = isContextObject.parseToJSON();
         try {
             String response = httpsHandler.sendPOSTRequest(TopazAuthorizerConstants.HTTPS_AUTHORIZER_IS, jsonObject);
-            if (isDebug) {
-                System.out.println(response);
-            }
             return new JSONObject(response);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -63,9 +53,6 @@ public class TopazAuthorizerHandler implements AuthorizerInterface {
         JSONObject jsonObject = queryContextObject.parseToJSON();
         try {
             String response = httpsHandler.sendPOSTRequest(TopazAuthorizerConstants.HTTPS_AUTHORIZER_QUERY, jsonObject);
-            if (isDebug) {
-                System.out.println(response);
-            }
             return new JSONObject(response);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -78,9 +65,6 @@ public class TopazAuthorizerHandler implements AuthorizerInterface {
         try {
             String response = httpsHandler.sendPOSTRequest(TopazAuthorizerConstants.HTTPS_AUTHORIZER_DECISIONTREE,
                     jsonObject);
-            if (isDebug) {
-                System.out.println(response);
-            }
             return new JSONObject(response);
         } catch (IOException e) {
             throw new RuntimeException(e);

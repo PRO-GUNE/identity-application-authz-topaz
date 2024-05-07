@@ -57,6 +57,8 @@
         <maven.buildnumber.plugin.version>1.4</maven.buildnumber.plugin.version>
         <maven-war-plugin.version>3.3.1</maven-war-plugin.version>
         <findsecbugs-plugin.version>1.10.1</findsecbugs-plugin.version>
+        <maven.checkstyleplugin.version>3.1.0</maven.checkstyleplugin.version>
+        <spotbugs-maven-plugin.version>4.7.2.1</spotbugs-maven-plugin.version>
 
         <junit.version>4.13.1</junit.version>
         <testng.version>6.9.10</testng.version>
@@ -95,59 +97,59 @@
                         <doUpdate>false</doUpdate>
                     </configuration>
                 </plugin>
-<!--                <plugin>-->
-<!--                    <groupId>org.apache.maven.plugins</groupId>-->
-<!--                    <artifactId>maven-checkstyle-plugin</artifactId>-->
-<!--                    <version>${maven.checkstyleplugin.version}</version>-->
-<!--                    <executions>-->
-<!--                        <execution>-->
-<!--                            <id>validate</id>-->
-<!--                            <phase>validate</phase>-->
-<!--                            <configuration>-->
-<!--                                <configLocation>-->
-<!--                                    https://raw.githubusercontent.com/wso2/code-quality-tools/v1.3/checkstyle/checkstyle.xml-->
-<!--                                </configLocation>-->
-<!--                                <suppressionsLocation>-->
-<!--                                    https://raw.githubusercontent.com/wso2/code-quality-tools/v1.3/checkstyle/suppressions.xml-->
-<!--                                </suppressionsLocation>-->
-<!--                                <encoding>UTF-8</encoding>-->
-<!--                                <consoleOutput>true</consoleOutput>-->
-<!--                                <failsOnError>true</failsOnError>-->
-<!--                                <includeTestSourceDirectory>true</includeTestSourceDirectory>-->
-<!--                            </configuration>-->
-<!--                            <goals>-->
-<!--                                <goal>check</goal>-->
-<!--                            </goals>-->
-<!--                        </execution>-->
-<!--                    </executions>-->
-<!--                </plugin>-->
-<!--                <plugin>-->
-<!--                    <groupId>com.github.spotbugs</groupId>-->
-<!--                    <artifactId>spotbugs-maven-plugin</artifactId>-->
-<!--                    <version>${spotbugs-maven-plugin.version}</version>-->
-<!--                    <configuration>-->
-<!--                        <effort>Max</effort>-->
-<!--                        <threshold>Low</threshold>-->
-<!--                        <failOnError>true</failOnError>-->
-<!--                        <maxHeap>1024</maxHeap>-->
-<!--                        <plugins>-->
-<!--                            <plugin>-->
-<!--                                <groupId>com.h3xstream.findsecbugs</groupId>-->
-<!--                                <artifactId>findsecbugs-plugin</artifactId>-->
-<!--                                <version>${findsecbugs-plugin.version}</version>-->
-<!--                            </plugin>-->
-<!--                        </plugins>-->
-<!--                    </configuration>-->
-<!--                    <executions>-->
-<!--                        <execution>-->
-<!--                            <id>analyze-compile</id>-->
-<!--                            <phase>compile</phase>-->
-<!--                            <goals>-->
-<!--                                <goal>check</goal>-->
-<!--                            </goals>-->
-<!--                        </execution>-->
-<!--                    </executions>-->
-<!--                </plugin>-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${maven.checkstyleplugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>validate</id>
+                            <phase>validate</phase>
+                            <configuration>
+                                <configLocation>
+                                    https://raw.githubusercontent.com/wso2/code-quality-tools/v1.3/checkstyle/checkstyle.xml
+                                </configLocation>
+                                <suppressionsLocation>
+                                    https://raw.githubusercontent.com/wso2/code-quality-tools/v1.3/checkstyle/suppressions.xml
+                                </suppressionsLocation>
+                                <encoding>UTF-8</encoding>
+                                <consoleOutput>true</consoleOutput>
+                                <failsOnError>true</failsOnError>
+                                <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                            </configuration>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>${spotbugs-maven-plugin.version}</version>
+                    <configuration>
+                        <effort>Max</effort>
+                        <threshold>Low</threshold>
+                        <failOnError>true</failOnError>
+                        <maxHeap>1024</maxHeap>
+                        <plugins>
+                            <plugin>
+                                <groupId>com.h3xstream.findsecbugs</groupId>
+                                <artifactId>findsecbugs-plugin</artifactId>
+                                <version>${findsecbugs-plugin.version}</version>
+                            </plugin>
+                        </plugins>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>analyze-compile</id>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
 

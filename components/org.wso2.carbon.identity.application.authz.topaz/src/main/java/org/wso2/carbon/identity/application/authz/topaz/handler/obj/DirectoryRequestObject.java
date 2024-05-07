@@ -85,7 +85,7 @@ public class DirectoryRequestObject implements JSONConvertibleInterface {
     public String parseToQueryParams() {
       return String.format("?%s=%s", OBJECT_TYPE_KEY, URLEncoder.encode(objectType, StandardCharsets.UTF_8)) +
                     String.format("&%s=%s", OBJECT_ID_KEY, URLEncoder.encode(objectId, StandardCharsets.UTF_8)) +
-                    String.format("&%s=%s",RELATION_KEY, URLEncoder.encode(relation, StandardCharsets.UTF_8)) +
+                    String.format("&%s=%s", RELATION_KEY, URLEncoder.encode(relation, StandardCharsets.UTF_8)) +
                     String.format("&%s=%s", SUBJECT_TYPE_KEY, URLEncoder.encode(subjectType, StandardCharsets.UTF_8)) +
                     String.format("&%s=%s", SUBJECT_ID_KEY, URLEncoder.encode(subjectId, StandardCharsets.UTF_8)) +
                     String.format("&%s=%s", SUBJECT_RELATION_KEY, URLEncoder.encode(subjectRelation,

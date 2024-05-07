@@ -20,15 +20,16 @@ package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
 
 import org.json.JSONObject;
 import org.mockito.Mock;
+import org.testng.annotations.Test;
 import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryObject;
 
 import java.io.IOException;
 
-import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazAuthorizerConstants.HTTPS_AUTHORIZER_POLICY;
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazDirectoryConstants.HTTPS_DIRECTORY_OBJECT;
+
 
 class HttpsHandlerTest {
 
@@ -48,7 +49,8 @@ class HttpsHandlerTest {
 
     @Test
     void sendPOSTRequest() {
-        DirectoryObject directoryUserObject = new DirectoryObject("string","Jane Eyre", "user", "jane@the-eyres.com");
+        DirectoryObject directoryUserObject = new DirectoryObject(
+                "string", "Jane Eyre", "user", "jane@the-eyres.com");
         JSONObject jsonObject = directoryUserObject.parseToJSON();
         try {
             String response = httpsHandler.sendPOSTRequest(HTTPS_DIRECTORY_OBJECT, jsonObject);
@@ -60,7 +62,7 @@ class HttpsHandlerTest {
 
     @Test
     void sendDELETERequest() {
-        String url = HTTPS_DIRECTORY_OBJECT+"/"+"user"+"/"+"jane@the-eyres.com";
+        String url = HTTPS_DIRECTORY_OBJECT + "/" + "user" + "/" + "jane@the-eyres.com";
         try {
             int response = httpsHandler.sendDELETERequest(url);
             assertEquals(200, response);

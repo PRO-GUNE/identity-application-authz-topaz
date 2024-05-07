@@ -27,6 +27,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.wso2.carbon.identity.application.authz.topaz.handler.impl.TopazAuthzHandler;
 
+/**
+ * OSGi Component for the Topaz Authorization Service.
+ */
 @Component(
         name = "identity.application.authz.topaz.component",
         immediate = true
@@ -34,6 +37,11 @@ import org.wso2.carbon.identity.application.authz.topaz.handler.impl.TopazAuthzH
 public class TopazAuthzServiceComponent {
     private static final Log log = LogFactory.getLog(TopazAuthzServiceComponent.class);
 
+    /**
+     * Method to activate the component
+     *
+     * @param context Context of the component
+     */
     @Activate
     protected void activate(ComponentContext context) {
         try {
@@ -48,6 +56,11 @@ public class TopazAuthzServiceComponent {
         }
     }
 
+    /**
+     * Method to deactivate the component
+     *
+     * @param context Context of the component
+     */
     @Deactivate
     protected void deactivate(ComponentContext context) {
         log.debug("Application Topaz authorizer handler bundle is deactivated.");

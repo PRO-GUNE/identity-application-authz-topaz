@@ -36,16 +36,9 @@ import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKe
  */
 public class TopazDirectoryHandler implements DirectoryInterface {
     private final HttpsHandler httpsHandler;
-    private final boolean isDebug;
 
     public TopazDirectoryHandler() {
-        this.isDebug = false;
-        this.httpsHandler = new HttpsHandler(false);
-    }
-
-    public TopazDirectoryHandler(boolean isDebug) {
-        this.isDebug = isDebug;
-        this.httpsHandler = new HttpsHandler(isDebug);
+        this.httpsHandler = new HttpsHandler();
     }
 
     @Override
@@ -54,9 +47,6 @@ public class TopazDirectoryHandler implements DirectoryInterface {
 
         try {
             String response = httpsHandler.sendPOSTRequest(TopazDirectoryConstants.HTTPS_DIRECTORY_CHECK, jsonObject);
-            if (isDebug) {
-                System.out.println(response);
-            }
             JSONObject checkObject = new JSONObject(response);
             return checkObject.getBoolean("check");
         } catch (IOException e) {

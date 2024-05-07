@@ -18,6 +18,9 @@
 
 package org.wso2.carbon.identity.application.authz.topaz.constants;
 
+/**
+ * Class contains constants used by the Directory.
+ */
 public class TopazDirectoryConstants {
     public static final String HTTPS_DIRECTORY = "https://localhost:9393/api/v3/directory";
 

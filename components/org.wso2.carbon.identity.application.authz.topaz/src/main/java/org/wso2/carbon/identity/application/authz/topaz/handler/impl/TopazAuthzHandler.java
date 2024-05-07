@@ -18,20 +18,32 @@
 
 package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
 
+/**
+ * Class exposed by the OSGi service.
+ */
 public class TopazAuthzHandler {
     private final TopazAuthorizerHandler topazAuthorizerHandler = new TopazAuthorizerHandler();
     private final TopazManagementHandler topazManagementHandler = new TopazManagementHandler();
     private final TopazDirectoryHandler topazDirectoryHandler = new TopazDirectoryHandler();
+    private final ObjManagementHandler objManagementHandler = new ObjManagementHandler();
 
     public TopazAuthorizerHandler getTopazAuthorizerHandler() {
+
         return topazAuthorizerHandler;
     }
 
     public TopazDirectoryHandler getTopazDirectoryHandler() {
+
         return topazDirectoryHandler;
     }
 
     public TopazManagementHandler getTopazManagementHandler() {
+
         return topazManagementHandler;
+    }
+
+    public ObjManagementHandler getObjManagementHandler() {
+
+        return objManagementHandler;
     }
 }

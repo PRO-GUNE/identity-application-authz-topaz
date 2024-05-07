@@ -18,6 +18,9 @@
 
 package org.wso2.carbon.identity.application.authz.topaz.constants;
 
+/**
+ * Class contains constants used when parsing objects to JSON payloads.
+ */
 public class TopazKeyConstants {
     public static final String OBJECT_TYPE_KEY = "object_type";
     public static final String OBJECT_ID_KEY = "object_id";

@@ -19,6 +19,7 @@
 package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
 
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -31,15 +32,6 @@ import java.nio.charset.StandardCharsets;
  * Handles all the calls to sending GET and POST requests to the Topaz Service.
  */
 public class HttpsHandler {
-    private final boolean isDebug;
-
-    public HttpsHandler() {
-        this.isDebug = false;
-    }
-
-    public HttpsHandler(boolean isDebug) {
-        this.isDebug = isDebug;
-    }
 
     /**
      * Sends a GET request to a given url.
@@ -53,22 +45,20 @@ public class HttpsHandler {
         HttpURLConnection urlConnection = (HttpURLConnection) obj.openConnection();
         urlConnection.setRequestMethod("GET");
 
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-        StringBuilder stringBuilder = new StringBuilder();
-        String inputLine = bufferedReader.readLine();
-        while (inputLine != null) {
-            stringBuilder.append(inputLine).append("\n");
-            inputLine = bufferedReader.readLine();
-        }
-        bufferedReader.close();
-        String response =  stringBuilder.toString();
+        try (BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
+            StringBuilder stringBuilder = new StringBuilder();
+            String inputLine = bufferedReader.readLine();
+            while (inputLine != null) {
+                stringBuilder.append(inputLine).append("\n");
+                inputLine = bufferedReader.readLine();
+            }
 
-        if (isDebug) {
-            System.out.println(response);
+            return stringBuilder.toString();
+        } finally {
+            urlConnection.disconnect();
         }
 
-        urlConnection.disconnect();
-        return response;
     }
 
     /**
@@ -95,18 +85,15 @@ public class HttpsHandler {
         }
 
         // Get the response
-        try (BufferedReader responseReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()))) {
+        try (BufferedReader responseReader = new BufferedReader(
+                new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
             StringBuilder response = new StringBuilder();
             String responseLine;
             while ((responseLine = responseReader.readLine()) != null) {
                 response.append(responseLine.trim());
             }
 
-            String finalResponse = response.toString();
-            if (isDebug) {
-                System.out.println("Response: " + finalResponse);
-            }
-            return finalResponse;
+            return response.toString();
         } finally {
             urlConnection.disconnect();
         }

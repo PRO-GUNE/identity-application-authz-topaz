@@ -35,16 +35,9 @@ import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazDi
  */
 public class TopazManagementHandler implements ManagementInterface {
     private final HttpsHandler httpsHandler;
-    private final boolean isDebug;
 
     public TopazManagementHandler() {
-        this.isDebug = false;
-        this.httpsHandler = new HttpsHandler(false);
-    }
-
-    public TopazManagementHandler(boolean isDebug) {
-        this.isDebug = isDebug;
-        this.httpsHandler = new HttpsHandler(isDebug);
+        this.httpsHandler = new HttpsHandler();
     }
 
     @Override
@@ -54,7 +47,6 @@ public class TopazManagementHandler implements ManagementInterface {
 
         try {
             String response =  httpsHandler.sendGETRequest(url);
-            System.out.println(response);
             JSONObject directoryRelationJSON = new JSONObject(response);
             return new DirectoryRelation(directoryRelationJSON);
         } catch (IOException e) {
@@ -65,10 +57,6 @@ public class TopazManagementHandler implements ManagementInterface {
     @Override
     public boolean createRelation(DirectoryRelation directoryRelation) {
         JSONObject jsonObject = directoryRelation.parseToJSON();
-        if (isDebug) {
-            System.out.println(jsonObject.toString());
-        }
-
         try {
             httpsHandler.sendPOSTRequest(HTTPS_DIRECTORY_RELATION, jsonObject);
             return true;
@@ -107,10 +95,6 @@ public class TopazManagementHandler implements ManagementInterface {
     @Override
     public boolean createObject(DirectoryObject directoryObject) {
         JSONObject jsonObject = directoryObject.parseToJSON();
-        if (isDebug) {
-            System.out.println(jsonObject.toString());
-        }
-
         try {
             httpsHandler.sendPOSTRequest(HTTPS_DIRECTORY_OBJECT, jsonObject);
             return true;
