@@ -19,7 +19,7 @@
 package org.wso2.carbon.identity.application.authz.topaz.handler.obj;
 
 import org.json.JSONObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.abs.JSONConvertibleInterface;
+import org.wso2.carbon.identity.application.authz.topaz.handler.abs.DirectoryRequestInterface;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -38,7 +38,7 @@ import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKe
  * A class to capture the relations in the Topaz directory.
  * Has the attributes that are required to create a directory relations in the Topaz authorizer.
  */
-public class DirectoryRelation implements JSONConvertibleInterface {
+public class DirectoryRelation implements DirectoryRequestInterface {
     private final String etag;
     private final String objectId;
     private final String objectType;

@@ -19,7 +19,7 @@
 package org.wso2.carbon.identity.application.authz.topaz.handler.obj;
 
 import org.json.JSONObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.abs.JSONConvertibleInterface;
+import org.wso2.carbon.identity.application.authz.topaz.handler.abs.DirectoryRequestInterface;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -35,7 +35,7 @@ import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKe
  * A class to capture the objects in the Topaz directory.
  * Has the attributes that are required to create a directory object in the Topaz authorizer.
  */
-public class DirectoryObject implements JSONConvertibleInterface {
+public class DirectoryObject implements DirectoryRequestInterface {
     private final String etag;
     private final String displayName;
     private final String objectType;
@@ -50,6 +50,13 @@ public class DirectoryObject implements JSONConvertibleInterface {
     public DirectoryObject(String etag, String displayName, String objectType, String objectId) {
         this.etag = etag;
         this.displayName = displayName;
+        this.objectId = objectId;
+        this.objectType = objectType;
+    }
+
+    public DirectoryObject(String objectType, String objectId) {
+        this.etag = "";
+        this.displayName = "";
         this.objectId = objectId;
         this.objectType = objectType;
     }
@@ -93,7 +100,8 @@ public class DirectoryObject implements JSONConvertibleInterface {
     }
 
     public String parseToPathParams() {
-        String pathString = String.format("/%s/%s", objectType, objectId);
-        return URLEncoder.encode(pathString, StandardCharsets.UTF_8);
+        return String.format("/%s/%s",
+                URLEncoder.encode(objectType, StandardCharsets.UTF_8),
+                URLEncoder.encode(objectId, StandardCharsets.UTF_8));
     }
 }

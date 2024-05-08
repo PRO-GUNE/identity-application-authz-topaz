@@ -26,15 +26,15 @@ import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryReq
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
 
-class TopazDirectoryHandlerTest {
+class TopazDirectoryHandlerTest extends TopazEvalTest {
     @Mock
     TopazDirectoryHandler topazDirectoryHandler = new TopazDirectoryHandler();
 
     @Test
     void check() {
         DirectoryRequestObject directoryRequestObject = new DirectoryRequestObject(
-                "user", "jane@the-eyres.com", "", "resource",
-                "hello-resource", "reader");
+                "user", "orgA-jane-eyre", "", "resource",
+                "orgA-hello-resource", "reader");
         boolean res = topazDirectoryHandler.check(directoryRequestObject);
         assertTrue(res);
     }
@@ -43,7 +43,7 @@ class TopazDirectoryHandlerTest {
     void graph() {
         DirectoryRequestObject directoryRequestObject = new DirectoryRequestObject(
                 "user", "", "", "resource",
-                "hello-resource", "reader");
+                "orgA-hello-resource", "reader");
         JSONObject res = topazDirectoryHandler.graph(directoryRequestObject);
         assertNotEquals(res.get("results").toString(), "[]");
     }

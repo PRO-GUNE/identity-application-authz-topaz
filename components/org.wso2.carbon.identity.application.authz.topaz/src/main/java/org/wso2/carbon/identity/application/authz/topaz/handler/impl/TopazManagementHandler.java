@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import org.wso2.carbon.identity.application.authz.topaz.handler.abs.ManagementInterface;
 import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryObject;
 import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRelation;
+import org.wso2.carbon.identity.application.authz.topaz.handler.util.HttpsHandler;
 
 import java.io.IOException;
 

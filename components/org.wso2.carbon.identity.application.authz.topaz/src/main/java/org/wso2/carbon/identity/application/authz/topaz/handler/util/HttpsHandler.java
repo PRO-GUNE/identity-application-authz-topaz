@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
+package org.wso2.carbon.identity.application.authz.topaz.handler.util;
 
 import org.json.JSONObject;
 
@@ -31,15 +31,8 @@ import java.nio.charset.StandardCharsets;
 /**
  * Handles all the calls to sending GET and POST requests to the Topaz Service.
  */
-public class HttpsHandler {
+public class HttpsHandler implements HttpsInterface {
 
-    /**
-     * Sends a GET request to a given url.
-     *
-     * @param url URL to where the request should be sent.
-     * @return the response of the request
-     * @throws IOException if the request made is invalid.
-     */
     public String sendGETRequest(String url) throws IOException {
         URL obj = new URL(url);
         HttpURLConnection urlConnection = (HttpURLConnection) obj.openConnection();
@@ -61,14 +54,6 @@ public class HttpsHandler {
 
     }
 
-    /**
-     * Sends a POST request to the given url with the given JSON object in the request body.
-     *
-     * @param url URL to where the request should be sent.
-     * @param jsonObject JSON object to be sent in the request body.
-     * @return the response of the request.
-     * @throws IOException if the request is invalid.
-     */
     public String sendPOSTRequest(String url, JSONObject jsonObject) throws IOException {
         URL obj = new URL(url);
         HttpURLConnection urlConnection = (HttpURLConnection) obj.openConnection();
@@ -99,13 +84,6 @@ public class HttpsHandler {
         }
     }
 
-    /**
-     * Sends a DELETE request to the given url.
-     *
-     * @param url URL to where the request should be sent.
-     * @return the status code of the response.
-     * @throws IOException if the request is invalid.
-     */
     public int sendDELETERequest(String url) throws IOException {
         URL obj = new URL(url);
         HttpURLConnection urlConnection = (HttpURLConnection) obj.openConnection();

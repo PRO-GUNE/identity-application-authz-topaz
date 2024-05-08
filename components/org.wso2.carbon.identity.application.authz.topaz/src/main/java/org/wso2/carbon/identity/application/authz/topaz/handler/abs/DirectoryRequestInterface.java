@@ -23,7 +23,7 @@ import org.json.JSONObject;
 /**
  * Interface for all Directory objects and relations.
  */
-public interface JSONConvertibleInterface {
+public interface DirectoryRequestInterface {
 
     /**
      * Parse the entity into a JSON object.

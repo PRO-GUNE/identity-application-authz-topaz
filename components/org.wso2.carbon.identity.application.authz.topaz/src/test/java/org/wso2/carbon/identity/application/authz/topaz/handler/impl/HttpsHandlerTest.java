@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import org.mockito.Mock;
 import org.testng.annotations.Test;
 import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.util.HttpsHandler;
 
 import java.io.IOException;
 
@@ -50,7 +51,7 @@ class HttpsHandlerTest {
     @Test
     void sendPOSTRequest() {
         DirectoryObject directoryUserObject = new DirectoryObject(
-                "string", "Jane Eyre", "user", "jane@the-eyres.com");
+                "string", "Jane Eyre", "user", "orgA-jane-eyre");
         JSONObject jsonObject = directoryUserObject.parseToJSON();
         try {
             String response = httpsHandler.sendPOSTRequest(HTTPS_DIRECTORY_OBJECT, jsonObject);
@@ -62,7 +63,7 @@ class HttpsHandlerTest {
 
     @Test
     void sendDELETERequest() {
-        String url = HTTPS_DIRECTORY_OBJECT + "/" + "user" + "/" + "jane@the-eyres.com";
+        String url = HTTPS_DIRECTORY_OBJECT + "/" + "user" + "/" + "orgA-jane-eyre";
         try {
             int response = httpsHandler.sendDELETERequest(url);
             assertEquals(200, response);

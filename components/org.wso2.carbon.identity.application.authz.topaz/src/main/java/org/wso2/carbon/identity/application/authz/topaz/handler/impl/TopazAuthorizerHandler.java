@@ -21,9 +21,9 @@ package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
 import org.json.JSONObject;
 import org.wso2.carbon.identity.application.authz.topaz.constants.TopazAuthorizerConstants;
 import org.wso2.carbon.identity.application.authz.topaz.handler.abs.AuthorizerInterface;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DecisionTreeContextObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.IsContextObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.QueryContextObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.abs.AuthorizerRequestInterface;
+import org.wso2.carbon.identity.application.authz.topaz.handler.util.HttpsHandler;
+import org.wso2.carbon.identity.application.authz.topaz.handler.util.HttpsInterface;
 
 import java.io.IOException;
 
@@ -31,14 +31,14 @@ import java.io.IOException;
  * Handle sending the is, query and decisiontree requests to the Topaz authorizer.
  */
 public class TopazAuthorizerHandler implements AuthorizerInterface {
-    private final HttpsHandler httpsHandler;
+    private final HttpsInterface httpsHandler;
 
     public TopazAuthorizerHandler() {
         this.httpsHandler = new HttpsHandler();
     }
 
     @Override
-    public JSONObject is(IsContextObject isContextObject) {
+    public JSONObject is(AuthorizerRequestInterface isContextObject) {
         JSONObject jsonObject = isContextObject.parseToJSON();
         try {
             String response = httpsHandler.sendPOSTRequest(TopazAuthorizerConstants.HTTPS_AUTHORIZER_IS, jsonObject);
@@ -49,7 +49,7 @@ public class TopazAuthorizerHandler implements AuthorizerInterface {
     }
 
     @Override
-    public JSONObject query(QueryContextObject queryContextObject) {
+    public JSONObject query(AuthorizerRequestInterface queryContextObject) {
         JSONObject jsonObject = queryContextObject.parseToJSON();
         try {
             String response = httpsHandler.sendPOSTRequest(TopazAuthorizerConstants.HTTPS_AUTHORIZER_QUERY, jsonObject);
@@ -60,7 +60,7 @@ public class TopazAuthorizerHandler implements AuthorizerInterface {
     }
 
     @Override
-    public JSONObject decisiontree(DecisionTreeContextObject decisionTreeContextObject) {
+    public JSONObject decisiontree(AuthorizerRequestInterface decisionTreeContextObject) {
         JSONObject jsonObject = decisionTreeContextObject.parseToJSON();
         try {
             String response = httpsHandler.sendPOSTRequest(TopazAuthorizerConstants.HTTPS_AUTHORIZER_DECISIONTREE,

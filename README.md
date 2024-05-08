@@ -30,8 +30,9 @@ There are four interfaces defined.
    Directory respectively.
 3. _AuthorizerInterface_ - Defines the _is, query_ and _decisiontree_ endpoints to call the _is, query_ and
    _decisiontree_ endpoints of the Authorizer respectively.
-4. DirectoryItemInterface - Defines a common interface for directory relations, directory objects, directory request
-   objects
+4. _AuthorizerRequestInterface_ - Defines a common interface for all authorizer requests.
+5. _DirectoryRequestInterface_ - Defines a common interface for all directory requests.
+6. _HttpsInterface_ - Defines an interface for the Https handler.
 
 ## Objects
 It is required to maintain the following representations to execute the requests to the topaz service successfully.
@@ -39,5 +40,9 @@ It is required to maintain the following representations to execute the requests
 2. DirectoryRelation - This class provides the representation of a directory relation.
 3. DirectoryRequestObject - This class provides the representation of the request sent to the Directory to the
    authorization endpoints i.e. check and graph.
-4. PolicyContextObject - This class provides the representation of a request sent to the Authorizer to verify by
-   evaluating policies
+4. IsContextObject - This class provides the representation of the authz/is request of the Authorizer.
+5. QueryContextObject - This class provides the representation of the authz/query request of the Authorizer.
+6. DecisionTreeContextObject - This class provides the representation of the authz/decisiontree of the Authorizer.
+
+## Class diagram
+![img.png](img.png)

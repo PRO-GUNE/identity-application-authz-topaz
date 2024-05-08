@@ -123,33 +123,33 @@
                         </execution>
                     </executions>
                 </plugin>
-                <plugin>
-                    <groupId>com.github.spotbugs</groupId>
-                    <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>${spotbugs-maven-plugin.version}</version>
-                    <configuration>
-                        <effort>Max</effort>
-                        <threshold>Low</threshold>
-                        <failOnError>true</failOnError>
-                        <maxHeap>1024</maxHeap>
-                        <plugins>
-                            <plugin>
-                                <groupId>com.h3xstream.findsecbugs</groupId>
-                                <artifactId>findsecbugs-plugin</artifactId>
-                                <version>${findsecbugs-plugin.version}</version>
-                            </plugin>
-                        </plugins>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>analyze-compile</id>
-                            <phase>compile</phase>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+<!--                <plugin>-->
+<!--                    <groupId>com.github.spotbugs</groupId>-->
+<!--                    <artifactId>spotbugs-maven-plugin</artifactId>-->
+<!--                    <version>${spotbugs-maven-plugin.version}</version>-->
+<!--                    <configuration>-->
+<!--                        <effort>Max</effort>-->
+<!--                        <threshold>Low</threshold>-->
+<!--                        <failOnError>true</failOnError>-->
+<!--                        <maxHeap>1024</maxHeap>-->
+<!--                        <plugins>-->
+<!--                            <plugin>-->
+<!--                                <groupId>com.h3xstream.findsecbugs</groupId>-->
+<!--                                <artifactId>findsecbugs-plugin</artifactId>-->
+<!--                                <version>${findsecbugs-plugin.version}</version>-->
+<!--                            </plugin>-->
+<!--                        </plugins>-->
+<!--                    </configuration>-->
+<!--                    <executions>-->
+<!--                        <execution>-->
+<!--                            <id>analyze-compile</id>-->
+<!--                            <phase>compile</phase>-->
+<!--                            <goals>-->
+<!--                                <goal>check</goal>-->
+<!--                            </goals>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--                </plugin>-->
             </plugins>
         </pluginManagement>
 

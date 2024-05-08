@@ -34,6 +34,7 @@ import java.util.HashMap;
  */
 public interface ObjManagementInterface {
     DirectoryObject createDirectoryObject(String etag, String displayName, String objectType, String objectId);
+    DirectoryObject createDirectoryObject(String objectType, String objectId);
     DirectoryObject createDirectoryObject(JSONObject jsonObject);
 
     DirectoryRelation createDirectoryRelation(

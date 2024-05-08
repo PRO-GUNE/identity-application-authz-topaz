@@ -42,6 +42,12 @@ public class ObjManagementHandler implements ObjManagementInterface {
     }
 
     @Override
+    public DirectoryObject createDirectoryObject(String objectType, String objectId) {
+
+        return new DirectoryObject(objectType, objectId);
+    }
+
+    @Override
     public DirectoryObject createDirectoryObject(JSONObject jsonObject) {
 
         return new DirectoryObject(jsonObject);

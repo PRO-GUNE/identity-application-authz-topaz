@@ -19,7 +19,7 @@
 package org.wso2.carbon.identity.application.authz.topaz.handler.obj;
 
 import org.json.JSONObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.abs.JSONConvertibleInterface;
+import org.wso2.carbon.identity.application.authz.topaz.handler.abs.AuthorizerRequestInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKe
 /**
  * A class to model the decision tree authorization requests sent to the topaz authorizer.
  */
-public class DecisionTreeContextObject implements JSONConvertibleInterface {
+public class DecisionTreeContextObject implements AuthorizerRequestInterface {
     private final String identityType;
     private final String identityId;
     private final HashMap<String, Object> resourceContext;

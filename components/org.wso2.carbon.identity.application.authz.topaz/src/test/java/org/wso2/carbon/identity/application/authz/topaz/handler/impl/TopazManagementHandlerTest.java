@@ -31,66 +31,66 @@ class TopazManagementHandlerTest {
     @Mock
     TopazManagementHandler topazManagementHandler = new TopazManagementHandler();
 
-    @Test
+    @Test(groups = "a")
     void getRelation() {
         DirectoryRelation directoryIdentityUserRelation = new DirectoryRelation(
-                "string", "jane@the-eyres.com", "identity", "identifier",
-                "jane@the-eyres.com", "user");
+                "string", "orgA-jane-eyre", "identity", "identifier",
+                "orgA-jane-eyre", "user");
         DirectoryRelation res = topazManagementHandler.getRelation(directoryIdentityUserRelation);
         assertNotNull(res);
     }
 
-    @Test
+    @Test(groups = "a")
     void createRelation() {
         // Create a new object
         DirectoryObject directoryUserObject = new DirectoryObject(
-                "string", "Jane Eyre", "user", "jane@the-eyres.com");
+                "string", "Jane Eyre", "user", "orgA-jane-eyre");
         topazManagementHandler.createObject(directoryUserObject);
 
         // Create a new identity
         DirectoryObject directoryIdentityObject = new DirectoryObject(
-                "string", "jane@the-eyres.com", "identity", "jane@the-eyres.com");
+                "string", "orgA-jane-eyre", "identity", "orgA-jane-eyre");
         topazManagementHandler.createObject(directoryIdentityObject);
 
         // Create an identity-user relation
         DirectoryRelation directoryIdentityUserRelation = new DirectoryRelation(
-                "string", "jane@the-eyres.com", "identity", "identifier",
-                "jane@the-eyres.com", "user");
+                "string", "orgA-jane-eyre", "identity", "identifier",
+                "orgA-jane-eyre", "user");
         boolean res = topazManagementHandler.createRelation(directoryIdentityUserRelation);
         assertTrue(res);
     }
 
-    @Test
-    void deleteRelation() {
-        DirectoryRelation directoryIdentityUserRelation = new DirectoryRelation(
-                "string", "jane@the-eyres.com", "identity", "identifier",
-                "jane@the-eyres.com", "user");
-        boolean res = topazManagementHandler.deleteRelation(directoryIdentityUserRelation);
-        assertTrue(res);
-    }
-
-    @Test
+    @Test(groups = "a")
     void getObject() {
         // Create a new object
         DirectoryObject directoryUserObject = new DirectoryObject(
-                "string", "Jane Eyre", "user", "jane@the-eyres.com");
+                "string", "Jane Eyre", "user", "orgA-jane-eyre");
         DirectoryObject res = topazManagementHandler.getObject(directoryUserObject);
         assertNotNull(res);
     }
 
-    @Test
+    @Test(groups = "a")
     void createObject() {
         // Create a new object
         DirectoryObject directoryUserObject = new DirectoryObject(
-                "string", "Jane Eyre", "user", "jane@the-eyres.com");
+                "string", "Jane Eyre", "user", "orgA-jane-eyre");
         boolean res = topazManagementHandler.createObject(directoryUserObject);
         assertTrue(res);
     }
 
-    @Test
+    @Test(dependsOnGroups = "a")
+    void deleteRelation() {
+        DirectoryRelation directoryIdentityUserRelation = new DirectoryRelation(
+                "string", "orgA-jane-eyre", "identity", "identifier",
+                "orgA-jane-eyre", "user");
+        boolean res = topazManagementHandler.deleteRelation(directoryIdentityUserRelation);
+        assertTrue(res);
+    }
+
+    @Test(dependsOnGroups = "a")
     void deleteObject() {
         DirectoryObject directoryUserObject = new DirectoryObject(
-                "string", "Jane Eyre", "user", "jane@the-eyres.com");
+                "string", "Jane Eyre", "user", "orgA-jane-eyre");
         boolean res = topazManagementHandler.deleteObject(directoryUserObject);
         assertTrue(res);
     }

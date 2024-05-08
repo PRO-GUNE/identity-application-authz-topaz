@@ -23,6 +23,8 @@ import org.json.JSONObject;
 import org.wso2.carbon.identity.application.authz.topaz.constants.TopazDirectoryConstants;
 import org.wso2.carbon.identity.application.authz.topaz.handler.abs.DirectoryInterface;
 import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRequestObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.util.HttpsHandler;
+import org.wso2.carbon.identity.application.authz.topaz.handler.util.HttpsInterface;
 
 import java.io.IOException;
 
@@ -35,7 +37,7 @@ import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKe
  * Implements the Directory interface.
  */
 public class TopazDirectoryHandler implements DirectoryInterface {
-    private final HttpsHandler httpsHandler;
+    private final HttpsInterface httpsHandler;
 
     public TopazDirectoryHandler() {
         this.httpsHandler = new HttpsHandler();
