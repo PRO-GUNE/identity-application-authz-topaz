@@ -16,10 +16,10 @@
  * under the License.
  */
 
-package org.wso2.carbon.identity.application.authz.topaz.handler.obj;
+package org.wso2.carbon.identity.application.authz.topaz.handler.core;
 
 import org.json.JSONObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.abs.AuthorizerRequestInterface;
+import org.wso2.carbon.identity.application.authz.topaz.handler.models.AuthorizerRequestInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKe
 /**
  * A class to model the is authorization requests sent to the topaz authorizer.
  */
-public class IsContextObject implements AuthorizerRequestInterface {
+public class CheckAuthzRequest implements AuthorizerRequestInterface {
     private final String identityType;
     private final String identityId;
     private final HashMap<String, Object> resourceContext;
@@ -50,8 +50,8 @@ public class IsContextObject implements AuthorizerRequestInterface {
      * @param policyPath the base path of the policy. For the is endpoint this will be the path of the policy that is
      *                   evaluated. For the decisiontree endpoint this will be base path of the evaluated policies.
      */
-    public IsContextObject(String identityType, String identityId, HashMap<String, Object> resourceContext,
-                           ArrayList<String> decisions, String policyPath) {
+    public CheckAuthzRequest(String identityType, String identityId, HashMap<String, Object> resourceContext,
+                             ArrayList<String> decisions, String policyPath) {
         this.identityType = identityType;
         this.identityId = identityId;
         this.resourceContext = resourceContext;

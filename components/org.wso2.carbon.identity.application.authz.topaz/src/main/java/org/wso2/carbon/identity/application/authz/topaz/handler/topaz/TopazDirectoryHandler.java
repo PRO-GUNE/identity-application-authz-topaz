@@ -16,13 +16,13 @@
  * under the License.
  */
 
-package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
+package org.wso2.carbon.identity.application.authz.topaz.handler.topaz;
 
 
 import org.json.JSONObject;
 import org.wso2.carbon.identity.application.authz.topaz.constants.TopazDirectoryConstants;
-import org.wso2.carbon.identity.application.authz.topaz.handler.abs.DirectoryInterface;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRequestObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryAuthzRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.models.DirectoryInterface;
 import org.wso2.carbon.identity.application.authz.topaz.handler.util.HttpsHandler;
 import org.wso2.carbon.identity.application.authz.topaz.handler.util.HttpsInterface;
 
@@ -44,8 +44,8 @@ public class TopazDirectoryHandler implements DirectoryInterface {
     }
 
     @Override
-    public boolean check(DirectoryRequestObject directoryRequestObject) {
-        JSONObject jsonObject = directoryRequestObject.parseToJSON();
+    public boolean check(DirectoryAuthzRequest directoryAuthzRequest) {
+        JSONObject jsonObject = directoryAuthzRequest.parseToJSON();
 
         try {
             String response = httpsHandler.sendPOSTRequest(TopazDirectoryConstants.HTTPS_DIRECTORY_CHECK, jsonObject);
@@ -57,13 +57,13 @@ public class TopazDirectoryHandler implements DirectoryInterface {
     }
 
     @Override
-    public JSONObject graph(DirectoryRequestObject directoryRequestObject) {
-        JSONObject jsonObject = directoryRequestObject.parseToJSON();
+    public JSONObject graph(DirectoryAuthzRequest directoryAuthzRequest) {
+        JSONObject jsonObject = directoryAuthzRequest.parseToJSON();
         String baseURL = TopazDirectoryConstants.HTTPS_DIRECTORY_GRAPH + String.format("/%s/%s/%s",
                 jsonObject.getString(OBJECT_TYPE_KEY),
                 jsonObject.getString(RELATION_KEY),
                 jsonObject.getString(SUBJECT_TYPE_KEY));
-        String queryParams = directoryRequestObject.parseToQueryParamsForGraph();
+        String queryParams = directoryAuthzRequest.parseToQueryParamsForGraph();
 
         String url = baseURL + queryParams;
         try {

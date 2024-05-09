@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.identity.application.authz.topaz.handler.abs;
+package org.wso2.carbon.identity.application.authz.topaz.handler.models;
 
 import org.json.JSONObject;
 
@@ -32,7 +32,7 @@ public interface AuthorizerInterface {
      * @param isContextObject the request sent to the Authorizer and evaluated.
      * @return a list of the decisions and the result of the evaluation of each decision.
      */
-    JSONObject is(AuthorizerRequestInterface isContextObject);
+    JSONObject check(AuthorizerRequestInterface isContextObject);
 
     /**
      * Most abstract endpoint provided by the topaz authorizer.

@@ -16,12 +16,12 @@
  * under the License.
  */
 
-package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
+package org.wso2.carbon.identity.application.authz.topaz.handler.topaz;
 
 import org.json.JSONObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.abs.ManagementInterface;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRelation;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryEntityRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryRelationRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.models.ManagementInterface;
 import org.wso2.carbon.identity.application.authz.topaz.handler.util.HttpsHandler;
 
 import java.io.IOException;
@@ -42,22 +42,22 @@ public class TopazManagementHandler implements ManagementInterface {
     }
 
     @Override
-    public DirectoryRelation getRelation(DirectoryRelation directoryRelation) {
-        String queryParams = directoryRelation.parseToQueryParams();
+    public DirectoryRelationRequest getRelation(DirectoryRelationRequest directoryRelationRequest) {
+        String queryParams = directoryRelationRequest.parseToQueryParams();
         String url = HTTPS_DIRECTORY_RELATION + queryParams;
 
         try {
             String response =  httpsHandler.sendGETRequest(url);
             JSONObject directoryRelationJSON = new JSONObject(response);
-            return new DirectoryRelation(directoryRelationJSON);
+            return new DirectoryRelationRequest(directoryRelationJSON);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public boolean createRelation(DirectoryRelation directoryRelation) {
-        JSONObject jsonObject = directoryRelation.parseToJSON();
+    public boolean createRelation(DirectoryRelationRequest directoryRelationRequest) {
+        JSONObject jsonObject = directoryRelationRequest.parseToJSON();
         try {
             httpsHandler.sendPOSTRequest(HTTPS_DIRECTORY_RELATION, jsonObject);
             return true;
@@ -67,8 +67,8 @@ public class TopazManagementHandler implements ManagementInterface {
     }
 
     @Override
-    public boolean deleteRelation(DirectoryRelation directoryRelation) {
-        String queryParams = directoryRelation.parseToQueryParams();
+    public boolean deleteRelation(DirectoryRelationRequest directoryRelationRequest) {
+        String queryParams = directoryRelationRequest.parseToQueryParams();
         String url = HTTPS_DIRECTORY_RELATION + queryParams;
 
         try {
@@ -80,22 +80,22 @@ public class TopazManagementHandler implements ManagementInterface {
     }
 
     @Override
-    public DirectoryObject getObject(DirectoryObject directoryObject) {
-        String pathParams = directoryObject.parseToPathParams();
+    public DirectoryEntityRequest getObject(DirectoryEntityRequest directoryEntityRequest) {
+        String pathParams = directoryEntityRequest.parseToPathParams();
         String url = HTTPS_DIRECTORY_OBJECT + pathParams;
 
         try {
             String response = httpsHandler.sendGETRequest(url);
             JSONObject directoryObjectJSON = new JSONObject(response);
-            return new DirectoryObject(directoryObjectJSON);
+            return new DirectoryEntityRequest(directoryObjectJSON);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public boolean createObject(DirectoryObject directoryObject) {
-        JSONObject jsonObject = directoryObject.parseToJSON();
+    public boolean createObject(DirectoryEntityRequest directoryEntityRequest) {
+        JSONObject jsonObject = directoryEntityRequest.parseToJSON();
         try {
             httpsHandler.sendPOSTRequest(HTTPS_DIRECTORY_OBJECT, jsonObject);
             return true;
@@ -105,8 +105,8 @@ public class TopazManagementHandler implements ManagementInterface {
     }
 
     @Override
-    public boolean deleteObject(DirectoryObject directoryObject) {
-        String pathParams = directoryObject.parseToPathParams();
+    public boolean deleteObject(DirectoryEntityRequest directoryEntityRequest) {
+        String pathParams = directoryEntityRequest.parseToPathParams();
         String url = HTTPS_DIRECTORY_OBJECT + pathParams;
 
         try {

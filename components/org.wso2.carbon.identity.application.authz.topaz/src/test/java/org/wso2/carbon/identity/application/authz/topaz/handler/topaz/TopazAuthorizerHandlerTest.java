@@ -16,14 +16,14 @@
  * under the License.
  */
 
-package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
+package org.wso2.carbon.identity.application.authz.topaz.handler.topaz;
 
 import org.json.JSONObject;
 import org.mockito.Mock;
 import org.testng.annotations.Test;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DecisionTreeContextObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.IsContextObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.QueryContextObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.CheckAuthzRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DecisionTreeAuthzRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.QueryAuthzRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,9 +48,9 @@ class TopazAuthorizerHandlerTest extends TopazEvalTest {
         ArrayList<String> decisions = new ArrayList<>();
         decisions.add("allowed");
 
-        IsContextObject isPolicyContextObject = new IsContextObject(
+        CheckAuthzRequest isPolicyContextObject = new CheckAuthzRequest(
                 IDENTITY_SUB, "orgA-jane-eyre", hashMap, decisions, "policies.GET.app.__id");
-        JSONObject res = topazAuthorizerHandler.is(isPolicyContextObject);
+        JSONObject res = topazAuthorizerHandler.check(isPolicyContextObject);
         JSONObject decision = (JSONObject) res.getJSONArray("decisions").get(0);
         assertTrue(decision.getBoolean("is"));
     }
@@ -71,10 +71,10 @@ class TopazAuthorizerHandlerTest extends TopazEvalTest {
         ArrayList<String> decisions = new ArrayList<>();
         decisions.add("allowed");
 
-        QueryContextObject queryContextObject = new QueryContextObject(
+        QueryAuthzRequest queryAuthzRequest = new QueryAuthzRequest(
                 IDENTITY_SUB, "orgA-jane-eyre", hashMap, query, input,
                 decisions, "", false, false);
-        JSONObject res = topazAuthorizerHandler.query(queryContextObject);
+        JSONObject res = topazAuthorizerHandler.query(queryAuthzRequest);
         assertNotEquals(res.getJSONObject("response").toString(), "[]");
     }
 
@@ -87,10 +87,10 @@ class TopazAuthorizerHandlerTest extends TopazEvalTest {
         ArrayList<String> decisions = new ArrayList<>();
         decisions.add("allowed");
 
-        DecisionTreeContextObject decisionTreeDecisionTreeContextObject = new DecisionTreeContextObject(
+        DecisionTreeAuthzRequest decisionTreeAuthzRequest = new DecisionTreeAuthzRequest(
                 IDENTITY_SUB, "orgA-jane-eyre", hashMap, decisions,
                 "policies.GET", PATH_SEPARATOR_DOT);
 
-        topazAuthorizerHandler.decisiontree(decisionTreeDecisionTreeContextObject);
+        topazAuthorizerHandler.decisiontree(decisionTreeAuthzRequest);
     }
 }

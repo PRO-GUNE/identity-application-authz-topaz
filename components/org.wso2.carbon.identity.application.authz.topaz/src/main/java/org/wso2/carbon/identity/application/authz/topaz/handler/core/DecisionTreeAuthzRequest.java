@@ -16,10 +16,10 @@
  * under the License.
  */
 
-package org.wso2.carbon.identity.application.authz.topaz.handler.obj;
+package org.wso2.carbon.identity.application.authz.topaz.handler.core;
 
 import org.json.JSONObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.abs.AuthorizerRequestInterface;
+import org.wso2.carbon.identity.application.authz.topaz.handler.models.AuthorizerRequestInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,18 +30,15 @@ import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKe
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.RESOURCE_CONTEXT;
 
 /**
- * A class to model the query authorization requests sent to the topaz authorizer.
+ * A class to model the decision tree authorization requests sent to the topaz authorizer.
  */
-public class QueryContextObject implements AuthorizerRequestInterface {
-    private final String query;
-    private final HashMap<String, Object> input;
+public class DecisionTreeAuthzRequest implements AuthorizerRequestInterface {
     private final String identityType;
     private final String identityId;
     private final HashMap<String, Object> resourceContext;
     private final ArrayList<String> decisions;
     private final String policyPath;
-    private final boolean metrics;
-    private final boolean traceSummary;
+    private final String pathSeparator;
 
     /**
      * @param identityType the type of identity of the subject. Can be one of three types:
@@ -50,29 +47,48 @@ public class QueryContextObject implements AuthorizerRequestInterface {
      *                   required in the topaz data model, and it should be related with the subject with identifier
      *                   relation.
      * @param resourceContext context to be passed for the evaluation.
-     * @param query The query to be evaluated by the authorizer.
-     * @param input The input to be evaluated with the query by the authorizer.
      * @param decisions decisions that needed to be evaluated.
      * @param policyPath the base path of the policy. For the is endpoint this will be the path of the policy that is
      *                   evaluated. For the decisiontree endpoint this will be base path of the evaluated policies.
-     * @param metrics enables or disables sending metrics data in the response.
-     * @param traceSummary enables or disables sending trace_summary data in the response.
+     * @param pathSeparator character used as the separating character when printing the path. Used with the
+     *                      decisiontree endpoint.
      */
-    public QueryContextObject(String identityType, String identityId, HashMap<String, Object> resourceContext,
-                              String query, HashMap<String, Object> input, ArrayList<String> decisions,
-                              String policyPath, boolean metrics, boolean traceSummary) {
-        this.query = query;
-        this.input = input;
+    public DecisionTreeAuthzRequest(
+            String identityType,
+            String identityId,
+            HashMap<String, Object> resourceContext,
+            ArrayList<String> decisions,
+            String policyPath,
+            String pathSeparator) {
         this.identityType = identityType;
         this.identityId = identityId;
         this.resourceContext = resourceContext;
         this.decisions = decisions;
         this.policyPath = policyPath;
-        this.metrics = metrics;
-        this.traceSummary = traceSummary;
+        this.pathSeparator = pathSeparator;
     }
 
-    @Override
+    /**
+     * @return a JSON object of the following format
+     * {
+     *     "identity_context": {
+     *         "type": "IDENTITY_TYPE_SUB",
+     *         "identity": "jane@the-eyres.com"
+     *     },
+     *     "options": {
+     *         "path_separator": "PATH_SEPARATOR_DOT"
+     *     },
+     *     "resource_context": {
+     *         "app_id": "eyre-app"
+     *     },
+     *     "policy_context": {
+     *         "decisions": [
+     *             "allowed"
+     *         ],
+     *         "path": ""
+     *     }
+     * }
+     */
     public JSONObject parseToJSON() {
         JSONObject jsonObject = new JSONObject();
         HashMap<String, Object> identityContext = new LinkedHashMap<>();
@@ -80,12 +96,8 @@ public class QueryContextObject implements AuthorizerRequestInterface {
         identityContext.put("identity", this.identityId);
         jsonObject.put(IDENTITY_CONTEXT, identityContext);
 
-        jsonObject.put("query", query);
-        jsonObject.put("input", input.toString());
-
         HashMap<String, Object> options = new LinkedHashMap<>();
-        identityContext.put("metrics", this.metrics);
-        identityContext.put("trace_summary", this.traceSummary);
+        identityContext.put("path_separator", this.pathSeparator);
         jsonObject.put("options", options);
 
         jsonObject.put(RESOURCE_CONTEXT, this.resourceContext);

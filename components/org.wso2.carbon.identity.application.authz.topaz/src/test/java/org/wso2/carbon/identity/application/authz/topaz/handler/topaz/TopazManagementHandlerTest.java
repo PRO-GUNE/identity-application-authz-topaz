@@ -16,13 +16,13 @@
  * under the License.
  */
 
-package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
+package org.wso2.carbon.identity.application.authz.topaz.handler.topaz;
 
 import org.json.JSONObject;
 import org.mockito.Mock;
 import org.testng.annotations.Test;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRelation;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryEntityRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryRelationRequest;
 
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
@@ -33,27 +33,27 @@ class TopazManagementHandlerTest {
 
     @Test(groups = "a")
     void getRelation() {
-        DirectoryRelation directoryIdentityUserRelation = new DirectoryRelation(
+        DirectoryRelationRequest directoryIdentityUserRelation = new DirectoryRelationRequest(
                 "string", "orgA-jane-eyre", "identity", "identifier",
                 "orgA-jane-eyre", "user");
-        DirectoryRelation res = topazManagementHandler.getRelation(directoryIdentityUserRelation);
+        DirectoryRelationRequest res = topazManagementHandler.getRelation(directoryIdentityUserRelation);
         assertNotNull(res);
     }
 
     @Test(groups = "a")
     void createRelation() {
         // Create a new object
-        DirectoryObject directoryUserObject = new DirectoryObject(
+        DirectoryEntityRequest directoryUserObject = new DirectoryEntityRequest(
                 "string", "Jane Eyre", "user", "orgA-jane-eyre");
         topazManagementHandler.createObject(directoryUserObject);
 
         // Create a new identity
-        DirectoryObject directoryIdentityObject = new DirectoryObject(
+        DirectoryEntityRequest directoryIdentityObject = new DirectoryEntityRequest(
                 "string", "orgA-jane-eyre", "identity", "orgA-jane-eyre");
         topazManagementHandler.createObject(directoryIdentityObject);
 
         // Create an identity-user relation
-        DirectoryRelation directoryIdentityUserRelation = new DirectoryRelation(
+        DirectoryRelationRequest directoryIdentityUserRelation = new DirectoryRelationRequest(
                 "string", "orgA-jane-eyre", "identity", "identifier",
                 "orgA-jane-eyre", "user");
         boolean res = topazManagementHandler.createRelation(directoryIdentityUserRelation);
@@ -63,16 +63,16 @@ class TopazManagementHandlerTest {
     @Test(groups = "a")
     void getObject() {
         // Create a new object
-        DirectoryObject directoryUserObject = new DirectoryObject(
+        DirectoryEntityRequest directoryUserObject = new DirectoryEntityRequest(
                 "string", "Jane Eyre", "user", "orgA-jane-eyre");
-        DirectoryObject res = topazManagementHandler.getObject(directoryUserObject);
+        DirectoryEntityRequest res = topazManagementHandler.getObject(directoryUserObject);
         assertNotNull(res);
     }
 
     @Test(groups = "a")
     void createObject() {
         // Create a new object
-        DirectoryObject directoryUserObject = new DirectoryObject(
+        DirectoryEntityRequest directoryUserObject = new DirectoryEntityRequest(
                 "string", "Jane Eyre", "user", "orgA-jane-eyre");
         boolean res = topazManagementHandler.createObject(directoryUserObject);
         assertTrue(res);
@@ -80,7 +80,7 @@ class TopazManagementHandlerTest {
 
     @Test(dependsOnGroups = "a")
     void deleteRelation() {
-        DirectoryRelation directoryIdentityUserRelation = new DirectoryRelation(
+        DirectoryRelationRequest directoryIdentityUserRelation = new DirectoryRelationRequest(
                 "string", "orgA-jane-eyre", "identity", "identifier",
                 "orgA-jane-eyre", "user");
         boolean res = topazManagementHandler.deleteRelation(directoryIdentityUserRelation);
@@ -89,7 +89,7 @@ class TopazManagementHandlerTest {
 
     @Test(dependsOnGroups = "a")
     void deleteObject() {
-        DirectoryObject directoryUserObject = new DirectoryObject(
+        DirectoryEntityRequest directoryUserObject = new DirectoryEntityRequest(
                 "string", "Jane Eyre", "user", "orgA-jane-eyre");
         boolean res = topazManagementHandler.deleteObject(directoryUserObject);
         assertTrue(res);

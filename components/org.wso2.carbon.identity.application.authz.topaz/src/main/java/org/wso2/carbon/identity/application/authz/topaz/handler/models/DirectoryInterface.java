@@ -16,10 +16,10 @@
  * under the License.
  */
 
-package org.wso2.carbon.identity.application.authz.topaz.handler.abs;
+package org.wso2.carbon.identity.application.authz.topaz.handler.models;
 
 import org.json.JSONObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRequestObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryAuthzRequest;
 
 /**
  * Interface used to implement the Topaz Directory.
@@ -30,17 +30,17 @@ public interface DirectoryInterface {
     /**
      * Perform the check operation that returns if a given relation between a subject and object exists.
      *
-     * @param directoryRequestObject Request to be checked using the directory check endpoint
+     * @param directoryAuthzRequest Request to be checked using the directory check endpoint
      * @return evaluation of the directory check endpoint
      */
-    boolean check(DirectoryRequestObject directoryRequestObject);
+    boolean check(DirectoryAuthzRequest directoryAuthzRequest);
 
     /**
      * Perform the graph operation that checks if a given relation exists with a given subject and object type or if a
      * given relation exists between a given object and subject type.
      *
-     * @param directoryRequestObject Request to be checked using the directory graph endpoint
+     * @param directoryAuthzRequest Request to be checked using the directory graph endpoint
      * @return a list output of all the values that conform to the requests
      */
-    JSONObject graph(DirectoryRequestObject directoryRequestObject);
+    JSONObject graph(DirectoryAuthzRequest directoryAuthzRequest);
 }

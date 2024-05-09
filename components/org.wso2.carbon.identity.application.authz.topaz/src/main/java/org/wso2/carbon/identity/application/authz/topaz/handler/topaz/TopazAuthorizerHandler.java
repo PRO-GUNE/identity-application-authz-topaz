@@ -16,12 +16,12 @@
  * under the License.
  */
 
-package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
+package org.wso2.carbon.identity.application.authz.topaz.handler.topaz;
 
 import org.json.JSONObject;
 import org.wso2.carbon.identity.application.authz.topaz.constants.TopazAuthorizerConstants;
-import org.wso2.carbon.identity.application.authz.topaz.handler.abs.AuthorizerInterface;
-import org.wso2.carbon.identity.application.authz.topaz.handler.abs.AuthorizerRequestInterface;
+import org.wso2.carbon.identity.application.authz.topaz.handler.models.AuthorizerInterface;
+import org.wso2.carbon.identity.application.authz.topaz.handler.models.AuthorizerRequestInterface;
 import org.wso2.carbon.identity.application.authz.topaz.handler.util.HttpsHandler;
 import org.wso2.carbon.identity.application.authz.topaz.handler.util.HttpsInterface;
 
@@ -38,10 +38,10 @@ public class TopazAuthorizerHandler implements AuthorizerInterface {
     }
 
     @Override
-    public JSONObject is(AuthorizerRequestInterface isContextObject) {
+    public JSONObject check(AuthorizerRequestInterface isContextObject) {
         JSONObject jsonObject = isContextObject.parseToJSON();
         try {
-            String response = httpsHandler.sendPOSTRequest(TopazAuthorizerConstants.HTTPS_AUTHORIZER_IS, jsonObject);
+            String response = httpsHandler.sendPOSTRequest(TopazAuthorizerConstants.HTTPS_AUTHORIZER_CHECK, jsonObject);
             return new JSONObject(response);
         } catch (IOException e) {
             throw new RuntimeException(e);

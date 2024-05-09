@@ -16,12 +16,12 @@
  * under the License.
  */
 
-package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
+package org.wso2.carbon.identity.application.authz.topaz.handler.topaz;
 
 import org.json.JSONObject;
 import org.mockito.Mock;
 import org.testng.annotations.Test;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRequestObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryAuthzRequest;
 
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
@@ -32,19 +32,19 @@ class TopazDirectoryHandlerTest extends TopazEvalTest {
 
     @Test
     void check() {
-        DirectoryRequestObject directoryRequestObject = new DirectoryRequestObject(
+        DirectoryAuthzRequest directoryAuthzRequest = new DirectoryAuthzRequest(
                 "user", "orgA-jane-eyre", "", "resource",
                 "orgA-hello-resource", "reader");
-        boolean res = topazDirectoryHandler.check(directoryRequestObject);
+        boolean res = topazDirectoryHandler.check(directoryAuthzRequest);
         assertTrue(res);
     }
 
     @Test
     void graph() {
-        DirectoryRequestObject directoryRequestObject = new DirectoryRequestObject(
+        DirectoryAuthzRequest directoryAuthzRequest = new DirectoryAuthzRequest(
                 "user", "", "", "resource",
                 "orgA-hello-resource", "reader");
-        JSONObject res = topazDirectoryHandler.graph(directoryRequestObject);
+        JSONObject res = topazDirectoryHandler.graph(directoryAuthzRequest);
         assertNotEquals(res.get("results").toString(), "[]");
     }
 }

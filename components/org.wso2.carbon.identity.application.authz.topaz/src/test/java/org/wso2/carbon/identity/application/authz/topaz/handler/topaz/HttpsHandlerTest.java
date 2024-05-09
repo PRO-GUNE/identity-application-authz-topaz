@@ -16,12 +16,12 @@
  * under the License.
  */
 
-package org.wso2.carbon.identity.application.authz.topaz.handler.impl;
+package org.wso2.carbon.identity.application.authz.topaz.handler.topaz;
 
 import org.json.JSONObject;
 import org.mockito.Mock;
 import org.testng.annotations.Test;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryEntityRequest;
 import org.wso2.carbon.identity.application.authz.topaz.handler.util.HttpsHandler;
 
 import java.io.IOException;
@@ -50,7 +50,7 @@ class HttpsHandlerTest {
 
     @Test
     void sendPOSTRequest() {
-        DirectoryObject directoryUserObject = new DirectoryObject(
+        DirectoryEntityRequest directoryUserObject = new DirectoryEntityRequest(
                 "string", "Jane Eyre", "user", "orgA-jane-eyre");
         JSONObject jsonObject = directoryUserObject.parseToJSON();
         try {

@@ -16,10 +16,10 @@
  * under the License.
  */
 
-package org.wso2.carbon.identity.application.authz.topaz.handler.obj;
+package org.wso2.carbon.identity.application.authz.topaz.handler.core;
 
 import org.json.JSONObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.abs.DirectoryRequestInterface;
+import org.wso2.carbon.identity.application.authz.topaz.handler.models.DirectoryRequestInterface;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -35,7 +35,7 @@ import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKe
  * A class to capture the objects in the Topaz directory.
  * Has the attributes that are required to create a directory object in the Topaz authorizer.
  */
-public class DirectoryObject implements DirectoryRequestInterface {
+public class DirectoryEntityRequest implements DirectoryRequestInterface {
     private final String etag;
     private final String displayName;
     private final String objectType;
@@ -47,21 +47,21 @@ public class DirectoryObject implements DirectoryRequestInterface {
      * @param objectType the type of the directory object.
      * @param objectId the unique id of the directory object.
      */
-    public DirectoryObject(String etag, String displayName, String objectType, String objectId) {
+    public DirectoryEntityRequest(String etag, String displayName, String objectType, String objectId) {
         this.etag = etag;
         this.displayName = displayName;
         this.objectId = objectId;
         this.objectType = objectType;
     }
 
-    public DirectoryObject(String objectType, String objectId) {
+    public DirectoryEntityRequest(String objectType, String objectId) {
         this.etag = "";
         this.displayName = "";
         this.objectId = objectId;
         this.objectType = objectType;
     }
 
-    public DirectoryObject(JSONObject jsonObject) {
+    public DirectoryEntityRequest(JSONObject jsonObject) {
         JSONObject result = jsonObject.getJSONObject("result");
         this.etag = result.getString(ETAG_KEY);
         this.displayName = result.getString(DISPLAY_NAME_KEY);

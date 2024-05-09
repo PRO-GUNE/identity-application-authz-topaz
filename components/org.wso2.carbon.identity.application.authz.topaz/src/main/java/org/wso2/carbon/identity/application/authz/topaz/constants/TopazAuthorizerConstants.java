@@ -26,7 +26,7 @@ public class TopazAuthorizerConstants {
 
     public static final String HTTPS_AUTHORIZER = "https://localhost:8383/api/v2/authz";
 
-    public static final String HTTPS_AUTHORIZER_IS = HTTPS_AUTHORIZER + "/is";
+    public static final String HTTPS_AUTHORIZER_CHECK = HTTPS_AUTHORIZER + "/is";
     public static final String HTTPS_AUTHORIZER_DECISIONTREE = HTTPS_AUTHORIZER + "/decisiontree";
     public static final String HTTPS_AUTHORIZER_QUERY = HTTPS_AUTHORIZER + "/query";
 

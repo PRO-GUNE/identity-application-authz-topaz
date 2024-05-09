@@ -16,15 +16,15 @@
  * under the License.
  */
 
-package org.wso2.carbon.identity.application.authz.topaz.handler.abs;
+package org.wso2.carbon.identity.application.authz.topaz.handler.models;
 
 import org.json.JSONObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DecisionTreeContextObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRelation;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.DirectoryRequestObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.IsContextObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.obj.QueryContextObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.CheckAuthzRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DecisionTreeAuthzRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryAuthzRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryEntityRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryRelationRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.QueryAuthzRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,11 +33,11 @@ import java.util.HashMap;
  * Interface for managing object classes used for management and evaluation.
  */
 public interface ObjManagementInterface {
-    DirectoryObject createDirectoryObject(String etag, String displayName, String objectType, String objectId);
-    DirectoryObject createDirectoryObject(String objectType, String objectId);
-    DirectoryObject createDirectoryObject(JSONObject jsonObject);
+    DirectoryEntityRequest createDirectoryObject(String etag, String displayName, String objectType, String objectId);
+    DirectoryEntityRequest createDirectoryObject(String objectType, String objectId);
+    DirectoryEntityRequest createDirectoryObject(JSONObject jsonObject);
 
-    DirectoryRelation createDirectoryRelation(
+    DirectoryRelationRequest createDirectoryRelation(
             String etag,
             String objectId,
             String objectType,
@@ -46,7 +46,7 @@ public interface ObjManagementInterface {
             String subjectType,
             String subjectRelation);
 
-    DirectoryRelation createDirectoryRelation(
+    DirectoryRelationRequest createDirectoryRelation(
             String etag,
             String objectId,
             String objectType,
@@ -54,9 +54,9 @@ public interface ObjManagementInterface {
             String subjectId,
             String subjectType);
 
-    DirectoryRelation createDirectoryRelation(JSONObject jsonObject);
+    DirectoryRelationRequest createDirectoryRelation(JSONObject jsonObject);
 
-    DirectoryRequestObject createDirectoryRequestObject(
+    DirectoryAuthzRequest createDirectoryRequestObject(
             String subjectType,
             String subjectId,
             String subjectRelation,
@@ -64,14 +64,14 @@ public interface ObjManagementInterface {
             String objectId,
             String relation);
 
-    IsContextObject createIsContextObject(
+    CheckAuthzRequest createIsContextObject(
             String identityType,
             String identityId,
             HashMap<String, Object> resourceContext,
             ArrayList<String> decisions,
             String policyPath);
 
-    QueryContextObject createQueryContextObject(
+    QueryAuthzRequest createQueryContextObject(
             String identityType,
             String identityId,
             HashMap<String, Object> resourceContext,
@@ -82,7 +82,7 @@ public interface ObjManagementInterface {
             boolean metrics,
             boolean traceSummary);
 
-    DecisionTreeContextObject createDecisionTreeContextObject(
+    DecisionTreeAuthzRequest createDecisionTreeContextObject(
             String identityType,
             String identityId,
             HashMap<String, Object> resourceContext,

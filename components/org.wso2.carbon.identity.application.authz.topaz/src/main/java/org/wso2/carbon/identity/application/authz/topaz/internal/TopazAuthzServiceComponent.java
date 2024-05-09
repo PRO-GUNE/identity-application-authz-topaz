@@ -25,7 +25,7 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.wso2.carbon.identity.application.authz.topaz.handler.impl.TopazAuthzHandler;
+import org.wso2.carbon.identity.application.authz.topaz.handler.topaz.TopazAuthzHandler;
 
 /**
  * OSGi Component for the Topaz Authorization Service.

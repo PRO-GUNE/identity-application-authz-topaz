@@ -16,10 +16,10 @@
  * under the License.
  */
 
-package org.wso2.carbon.identity.application.authz.topaz.handler.obj;
+package org.wso2.carbon.identity.application.authz.topaz.handler.core;
 
 import org.json.JSONObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.abs.DirectoryRequestInterface;
+import org.wso2.carbon.identity.application.authz.topaz.handler.models.DirectoryRequestInterface;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -38,7 +38,7 @@ import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKe
  * A class to capture the relations in the Topaz directory.
  * Has the attributes that are required to create a directory relations in the Topaz authorizer.
  */
-public class DirectoryRelation implements DirectoryRequestInterface {
+public class DirectoryRelationRequest implements DirectoryRequestInterface {
     private final String etag;
     private final String objectId;
     private final String objectType;
@@ -59,7 +59,7 @@ public class DirectoryRelation implements DirectoryRequestInterface {
      * @param subjectRelation the relationship of the subject that is involved in the relation. For example:
      *                        group#member - here the subjectRelation is member
      */
-    public DirectoryRelation(
+    public DirectoryRelationRequest(
             String etag,
             String objectId,
             String objectType,
@@ -76,7 +76,7 @@ public class DirectoryRelation implements DirectoryRequestInterface {
         this.subjectRelation = subjectRelation;
     }
 
-    public DirectoryRelation(
+    public DirectoryRelationRequest(
             String etag,
             String objectId,
             String objectType,
@@ -92,7 +92,7 @@ public class DirectoryRelation implements DirectoryRequestInterface {
         this.subjectRelation = "";
     }
 
-    public DirectoryRelation(JSONObject jsonObject) {
+    public DirectoryRelationRequest(JSONObject jsonObject) {
         JSONObject result = jsonObject.getJSONObject("result");
         this.etag = result.getString("etag");
         this.objectId = result.getString(OBJECT_ID_KEY);

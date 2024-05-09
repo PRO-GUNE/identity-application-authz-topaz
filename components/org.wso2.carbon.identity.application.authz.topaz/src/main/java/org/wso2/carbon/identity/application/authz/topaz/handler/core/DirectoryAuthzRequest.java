@@ -16,10 +16,10 @@
  * under the License.
  */
 
-package org.wso2.carbon.identity.application.authz.topaz.handler.obj;
+package org.wso2.carbon.identity.application.authz.topaz.handler.core;
 
 import org.json.JSONObject;
-import org.wso2.carbon.identity.application.authz.topaz.handler.abs.DirectoryRequestInterface;
+import org.wso2.carbon.identity.application.authz.topaz.handler.models.DirectoryRequestInterface;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -35,7 +35,7 @@ import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKe
 /**
  * A class to model the authorization requests sent to the topaz directory.
  */
-public class DirectoryRequestObject implements DirectoryRequestInterface {
+public class DirectoryAuthzRequest implements DirectoryRequestInterface {
     private final String subjectType;
     private final String subjectId;
     private final String subjectRelation;
@@ -43,7 +43,7 @@ public class DirectoryRequestObject implements DirectoryRequestInterface {
     private final String objectId;
     private final String relation;
 
-    public DirectoryRequestObject(
+    public DirectoryAuthzRequest(
             String subjectType,
             String subjectId,
             String subjectRelation,

@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.identity.application.authz.topaz.handler.abs;
+package org.wso2.carbon.identity.application.authz.topaz.handler.models;
 
 import org.json.JSONObject;
 
