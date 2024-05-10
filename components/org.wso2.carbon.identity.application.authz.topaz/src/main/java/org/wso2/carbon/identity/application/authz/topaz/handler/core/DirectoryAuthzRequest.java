@@ -100,4 +100,34 @@ public class DirectoryAuthzRequest implements DirectoryRequestInterface {
                         StandardCharsets.UTF_8));
 
     }
+
+    public String getRelation() {
+
+        return relation;
+    }
+
+    public String getSubjectType() {
+
+        return subjectType;
+    }
+
+    public String getObjectType() {
+
+        return objectType;
+    }
+
+    public String getSubjectRelation() {
+
+        return subjectRelation;
+    }
+
+    public String getSubjectId() {
+
+        return subjectId;
+    }
+
+    public String getObjectId() {
+
+        return objectId;
+    }
 }

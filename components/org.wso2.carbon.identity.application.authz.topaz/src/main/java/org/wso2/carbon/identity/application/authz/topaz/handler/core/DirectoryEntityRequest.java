@@ -104,4 +104,24 @@ public class DirectoryEntityRequest implements DirectoryRequestInterface {
                 URLEncoder.encode(objectType, StandardCharsets.UTF_8),
                 URLEncoder.encode(objectId, StandardCharsets.UTF_8));
     }
+
+    public String getObjectType() {
+
+        return objectType;
+    }
+
+    public String getObjectId() {
+
+        return objectId;
+    }
+
+    public String getDisplayName() {
+
+        return displayName;
+    }
+
+    public String getEtag() {
+
+        return etag;
+    }
 }

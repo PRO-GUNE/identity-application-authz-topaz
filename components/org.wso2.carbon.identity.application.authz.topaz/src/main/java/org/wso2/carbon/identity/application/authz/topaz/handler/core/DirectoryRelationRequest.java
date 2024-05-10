@@ -146,4 +146,38 @@ public class DirectoryRelationRequest implements DirectoryRequestInterface {
         return jsonObject;
     }
 
+    public String getObjectType() {
+
+        return objectType;
+    }
+
+    public String getObjectId() {
+
+        return objectId;
+    }
+
+    public String getSubjectRelation() {
+
+        return subjectRelation;
+    }
+
+    public String getSubjectId() {
+
+        return subjectId;
+    }
+
+    public String getRelation() {
+
+        return relation;
+    }
+
+    public String getSubjectType() {
+
+        return subjectType;
+    }
+
+    public String getEtag() {
+
+        return etag;
+    }
 }

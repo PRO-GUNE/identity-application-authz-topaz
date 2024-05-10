@@ -35,11 +35,12 @@
                         </Import-Package>
                         <Export-Package>
                             !org.wso2.carbon.identity.application.authz.topaz.internal,
-                            org.wso2.carbon.identity.application.authz.topaz.handler.models;version="${identity.app.authz.topaz.pkg.exp.version}",
-                            org.wso2.carbon.identity.application.authz.topaz.handler.topaz;version="${identity.app.authz.topaz.pkg.exp.version}",
-                            org.wso2.carbon.identity.application.authz.topaz.handler.core;version="${identity.app.authz.topaz.pkg.exp.version}",
-                            org.wso2.carbon.identity.application.authz.topaz.handler.util;version="${identity.app.authz.topaz.pkg.exp.version}",
-                            org.wso2.carbon.identity.application.authz.topaz.constants;version="${identity.app.authz.topaz.pkg.exp.version}",
+                            org.wso2.carbon.identity.application.authz.topaz.*; version="${identity.app.authz.topaz.pkg.exp.version}",
+<!--                            org.wso2.carbon.identity.application.authz.topaz.handler.models;version="${identity.app.authz.topaz.pkg.exp.version}",-->
+<!--                            org.wso2.carbon.identity.application.authz.topaz.handler.topaz;version="${identity.app.authz.topaz.pkg.exp.version}",-->
+<!--                            org.wso2.carbon.identity.application.authz.topaz.handler.core;version="${identity.app.authz.topaz.pkg.exp.version}",-->
+<!--                            org.wso2.carbon.identity.application.authz.topaz.handler.util;version="${identity.app.authz.topaz.pkg.exp.version}",-->
+<!--                            org.wso2.carbon.identity.application.authz.topaz.constants;version="${identity.app.authz.topaz.pkg.exp.version}",-->
                         </Export-Package>
                     </instructions>
                 </configuration>

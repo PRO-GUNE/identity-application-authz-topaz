@@ -96,4 +96,29 @@ public class CheckAuthzRequest implements AuthorizerRequestInterface {
 
         return jsonObject;
     }
+
+    public ArrayList<String> getDecisions() {
+
+        return decisions;
+    }
+
+    public HashMap<String, Object> getResourceContext() {
+
+        return resourceContext;
+    }
+
+    public String getIdentityId() {
+
+        return identityId;
+    }
+
+    public String getIdentityType() {
+
+        return identityType;
+    }
+
+    public String getPolicyPath() {
+
+        return policyPath;
+    }
 }

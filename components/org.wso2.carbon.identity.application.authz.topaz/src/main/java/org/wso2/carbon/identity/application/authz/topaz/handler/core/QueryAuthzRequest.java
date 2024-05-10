@@ -97,4 +97,39 @@ public class QueryAuthzRequest implements AuthorizerRequestInterface {
 
         return jsonObject;
     }
+
+    public String getPolicyPath() {
+
+        return policyPath;
+    }
+
+    public ArrayList<String> getDecisions() {
+
+        return decisions;
+    }
+
+    public HashMap<String, Object> getResourceContext() {
+
+        return resourceContext;
+    }
+
+    public String getIdentityType() {
+
+        return identityType;
+    }
+
+    public String getIdentityId() {
+
+        return identityId;
+    }
+
+    public HashMap<String, Object> getInput() {
+
+        return input;
+    }
+
+    public String getQuery() {
+
+        return query;
+    }
 }

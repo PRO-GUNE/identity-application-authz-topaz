@@ -109,4 +109,35 @@ public class DecisionTreeAuthzRequest implements AuthorizerRequestInterface {
 
         return jsonObject;
     }
+
+    public String getIdentityType() {
+
+        return identityType;
+    }
+
+    public String getIdentityId() {
+
+        return identityId;
+    }
+
+    public HashMap<String, Object> getResourceContext() {
+
+        return resourceContext;
+    }
+
+    public ArrayList<String> getDecisions() {
+
+        return decisions;
+    }
+
+    public String getPolicyPath() {
+
+        return policyPath;
+    }
+
+    public String getPathSeparator() {
+
+        return pathSeparator;
+    }
 }
+

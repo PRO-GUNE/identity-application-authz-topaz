@@ -85,6 +85,7 @@ class TopazManagementHandlerTest {
                 "orgA-jane-eyre", "user");
         boolean res = topazManagementHandler.deleteRelation(directoryIdentityUserRelation);
         assertTrue(res);
+        topazManagementHandler.createRelation(directoryIdentityUserRelation);
     }
 
     @Test(dependsOnGroups = "a")
@@ -93,6 +94,7 @@ class TopazManagementHandlerTest {
                 "string", "Jane Eyre", "user", "orgA-jane-eyre");
         boolean res = topazManagementHandler.deleteObject(directoryUserObject);
         assertTrue(res);
+        topazManagementHandler.createObject(directoryUserObject);
     }
 
     @Test
