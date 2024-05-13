@@ -18,7 +18,6 @@
 
 package org.wso2.carbon.identity.application.authz.topaz.handler.topaz;
 
-import org.json.JSONObject;
 import org.wso2.carbon.identity.application.authz.topaz.handler.core.CheckAuthzRequest;
 import org.wso2.carbon.identity.application.authz.topaz.handler.core.DecisionTreeAuthzRequest;
 import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryAuthzRequest;
@@ -36,10 +35,10 @@ import java.util.HashMap;
 public class ObjManagementHandler implements ObjManagementInterface {
 
     @Override
-    public DirectoryEntityRequest createDirectoryObject(
-            String etag, String displayName, String objectType, String objectId) {
+    public DirectoryEntityRequest createDirectoryObject(String displayName, String objectType, String objectId,
+                                                        Object properties) {
 
-        return new DirectoryEntityRequest(etag, displayName, objectType, objectId);
+        return new DirectoryEntityRequest(displayName, objectType, objectId, properties);
     }
 
     @Override
@@ -49,31 +48,19 @@ public class ObjManagementHandler implements ObjManagementInterface {
     }
 
     @Override
-    public DirectoryEntityRequest createDirectoryObject(JSONObject jsonObject) {
-
-        return new DirectoryEntityRequest(jsonObject);
-    }
-
-    @Override
-    public DirectoryRelationRequest createDirectoryRelation(String etag, String objectId, String objectType,
+    public DirectoryRelationRequest createDirectoryRelation(String objectId, String objectType,
                                                             String relation, String subjectId, String subjectType,
                                                             String subjectRelation) {
 
-        return new DirectoryRelationRequest(etag, objectId, objectType, relation,
+        return new DirectoryRelationRequest(objectId, objectType, relation,
                 subjectId, subjectType, subjectRelation);
     }
 
     @Override
-    public DirectoryRelationRequest createDirectoryRelation(String etag, String objectId, String objectType,
+    public DirectoryRelationRequest createDirectoryRelation(String objectId, String objectType,
                                                             String relation, String subjectId, String subjectType) {
 
-        return new DirectoryRelationRequest(etag, objectId, objectType, relation, subjectId, subjectType);
-    }
-
-    @Override
-    public DirectoryRelationRequest createDirectoryRelation(JSONObject jsonObject) {
-
-        return new DirectoryRelationRequest(jsonObject);
+        return new DirectoryRelationRequest(objectId, objectType, relation, subjectId, subjectType);
     }
 
     @Override

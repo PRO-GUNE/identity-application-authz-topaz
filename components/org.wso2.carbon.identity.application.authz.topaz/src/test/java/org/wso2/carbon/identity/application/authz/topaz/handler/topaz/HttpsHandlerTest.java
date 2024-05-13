@@ -51,7 +51,7 @@ class HttpsHandlerTest {
     @Test
     void sendPOSTRequest() {
         DirectoryEntityRequest directoryUserObject = new DirectoryEntityRequest(
-                "string", "Jane Eyre", "user", "orgA-jane-eyre");
+                "Jane Eyre", "user", "orgA-jane-eyre");
         JSONObject jsonObject = directoryUserObject.parseToJSON();
         try {
             String response = httpsHandler.sendPOSTRequest(HTTPS_DIRECTORY_OBJECT, jsonObject);

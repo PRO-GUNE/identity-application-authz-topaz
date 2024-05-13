@@ -18,7 +18,6 @@
 
 package org.wso2.carbon.identity.application.authz.topaz.handler.models;
 
-import org.json.JSONObject;
 import org.wso2.carbon.identity.application.authz.topaz.handler.core.CheckAuthzRequest;
 import org.wso2.carbon.identity.application.authz.topaz.handler.core.DecisionTreeAuthzRequest;
 import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryAuthzRequest;
@@ -33,12 +32,11 @@ import java.util.HashMap;
  * Interface for managing object classes used for management and evaluation.
  */
 public interface ObjManagementInterface {
-    DirectoryEntityRequest createDirectoryObject(String etag, String displayName, String objectType, String objectId);
+    DirectoryEntityRequest createDirectoryObject(String displayName, String objectType, String objectId,
+                                                 Object properties);
     DirectoryEntityRequest createDirectoryObject(String objectType, String objectId);
-    DirectoryEntityRequest createDirectoryObject(JSONObject jsonObject);
 
     DirectoryRelationRequest createDirectoryRelation(
-            String etag,
             String objectId,
             String objectType,
             String relation,
@@ -47,14 +45,11 @@ public interface ObjManagementInterface {
             String subjectRelation);
 
     DirectoryRelationRequest createDirectoryRelation(
-            String etag,
             String objectId,
             String objectType,
             String relation,
             String subjectId,
             String subjectType);
-
-    DirectoryRelationRequest createDirectoryRelation(JSONObject jsonObject);
 
     DirectoryAuthzRequest createDirectoryRequestObject(
             String subjectType,

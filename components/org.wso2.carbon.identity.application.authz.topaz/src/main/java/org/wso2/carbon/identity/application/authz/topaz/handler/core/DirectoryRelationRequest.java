@@ -26,9 +26,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.ETAG_KEY;
-import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.OBJECT_ID_KEY;
-import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.OBJECT_TYPE_KEY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.ENTITY_ID_KEY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.ENTITY_TYPE_KEY;
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.RELATION_KEY;
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.SUBJECT_ID_KEY;
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.SUBJECT_RELATION_KEY;
@@ -39,9 +38,8 @@ import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKe
  * Has the attributes that are required to create a directory relations in the Topaz authorizer.
  */
 public class DirectoryRelationRequest implements DirectoryRequestInterface {
-    private final String etag;
-    private final String objectId;
-    private final String objectType;
+    private final String entityId;
+    private final String entityType;
     private final String relation;
     private final String subjectId;
     private final String subjectType;
@@ -50,9 +48,8 @@ public class DirectoryRelationRequest implements DirectoryRequestInterface {
     /**
      * A relation between a subject and object. Both the subject and object are directory objects.
      *
-     * @param etag a random string.
-     * @param objectId the unique id of the object.
-     * @param objectType the type of the object.
+     * @param entityId the unique id of the object.
+     * @param entityType the type of the object.
      * @param relation the relation of the object and the subject.
      * @param subjectId the unique id of the subject.
      * @param subjectType the type of the subject.
@@ -60,16 +57,14 @@ public class DirectoryRelationRequest implements DirectoryRequestInterface {
      *                        group#member - here the subjectRelation is member
      */
     public DirectoryRelationRequest(
-            String etag,
-            String objectId,
-            String objectType,
+            String entityId,
+            String entityType,
             String relation,
             String subjectId,
             String subjectType,
             String subjectRelation) {
-        this.etag = etag;
-        this.objectId = objectId;
-        this.objectType = objectType;
+        this.entityId = entityId;
+        this.entityType = entityType;
         this.relation = relation;
         this.subjectId = subjectId;
         this.subjectType = subjectType;
@@ -77,35 +72,36 @@ public class DirectoryRelationRequest implements DirectoryRequestInterface {
     }
 
     public DirectoryRelationRequest(
-            String etag,
-            String objectId,
-            String objectType,
+            String entityId,
+            String entityType,
             String relation,
             String subjectId,
             String subjectType) {
-        this.etag = etag;
-        this.objectId = objectId;
-        this.objectType = objectType;
+        this.entityId = entityId;
+        this.entityType = entityType;
         this.relation = relation;
         this.subjectId = subjectId;
         this.subjectType = subjectType;
         this.subjectRelation = "";
     }
 
-    public DirectoryRelationRequest(JSONObject jsonObject) {
+    public DirectoryRelationResponse getResponse(JSONObject jsonObject) {
         JSONObject result = jsonObject.getJSONObject("result");
-        this.etag = result.getString("etag");
-        this.objectId = result.getString(OBJECT_ID_KEY);
-        this.objectType = result.getString(OBJECT_TYPE_KEY);
-        this.relation = result.getString(RELATION_KEY);
-        this.subjectId = result.getString(SUBJECT_ID_KEY);
-        this.subjectType = result.getString(SUBJECT_TYPE_KEY);
-        this.subjectRelation = result.getString(SUBJECT_RELATION_KEY);
+        DirectoryRelationResponse directoryRelationResponse = new DirectoryRelationResponse();
+
+        directoryRelationResponse.setEntityId(result.getString(ENTITY_ID_KEY));
+        directoryRelationResponse.setEntityType(result.getString(ENTITY_TYPE_KEY));
+        directoryRelationResponse.setRelation(result.getString(RELATION_KEY));
+        directoryRelationResponse.setSubjectId(result.getString(SUBJECT_ID_KEY));
+        directoryRelationResponse.setSubjectType(result.getString(SUBJECT_TYPE_KEY));
+        directoryRelationResponse.setSubjectRelation(result.getString(SUBJECT_RELATION_KEY));
+
+        return directoryRelationResponse;
     }
 
     public String parseToQueryParams() {
-        return String.format("?%s=%s", OBJECT_TYPE_KEY, URLEncoder.encode(objectType, StandardCharsets.UTF_8)) +
-                String.format("&%s=%s", OBJECT_ID_KEY, URLEncoder.encode(objectId, StandardCharsets.UTF_8)) +
+        return String.format("?%s=%s", ENTITY_TYPE_KEY, URLEncoder.encode(entityType, StandardCharsets.UTF_8)) +
+                String.format("&%s=%s", ENTITY_ID_KEY, URLEncoder.encode(entityId, StandardCharsets.UTF_8)) +
                 String.format("&%s=%s", RELATION_KEY, URLEncoder.encode(relation, StandardCharsets.UTF_8)) +
                 String.format("&%s=%s", SUBJECT_TYPE_KEY, URLEncoder.encode(subjectType, StandardCharsets.UTF_8)) +
                 String.format("&%s=%s", SUBJECT_ID_KEY, URLEncoder.encode(subjectId, StandardCharsets.UTF_8)) +
@@ -133,9 +129,8 @@ public class DirectoryRelationRequest implements DirectoryRequestInterface {
         JSONObject jsonObject = new JSONObject();
         HashMap<String, Object> relations = new LinkedHashMap<>();
 
-        relations.put(ETAG_KEY, this.etag);
-        relations.put(OBJECT_ID_KEY, this.objectId);
-        relations.put(OBJECT_TYPE_KEY, this.objectType);
+        relations.put(ENTITY_ID_KEY, this.entityId);
+        relations.put(ENTITY_TYPE_KEY, this.entityType);
         relations.put(RELATION_KEY, this.relation);
         relations.put(SUBJECT_TYPE_KEY, this.subjectType);
         relations.put(SUBJECT_RELATION_KEY, this.subjectRelation);
@@ -146,14 +141,14 @@ public class DirectoryRelationRequest implements DirectoryRequestInterface {
         return jsonObject;
     }
 
-    public String getObjectType() {
+    public String getEntityType() {
 
-        return objectType;
+        return entityType;
     }
 
-    public String getObjectId() {
+    public String getEntityId() {
 
-        return objectId;
+        return entityId;
     }
 
     public String getSubjectRelation() {
@@ -174,10 +169,5 @@ public class DirectoryRelationRequest implements DirectoryRequestInterface {
     public String getSubjectType() {
 
         return subjectType;
-    }
-
-    public String getEtag() {
-
-        return etag;
     }
 }

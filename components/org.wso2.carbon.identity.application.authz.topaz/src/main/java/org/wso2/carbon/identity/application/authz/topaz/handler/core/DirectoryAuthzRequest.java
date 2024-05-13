@@ -25,8 +25,8 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 
-import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.OBJECT_ID_KEY;
-import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.OBJECT_TYPE_KEY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.ENTITY_ID_KEY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.ENTITY_TYPE_KEY;
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.RELATION_KEY;
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.SUBJECT_ID_KEY;
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.SUBJECT_RELATION_KEY;
@@ -39,22 +39,22 @@ public class DirectoryAuthzRequest implements DirectoryRequestInterface {
     private final String subjectType;
     private final String subjectId;
     private final String subjectRelation;
-    private final String objectType;
-    private final String objectId;
+    private final String entityType;
+    private final String entityId;
     private final String relation;
 
     public DirectoryAuthzRequest(
             String subjectType,
             String subjectId,
             String subjectRelation,
-            String objectType,
-            String objectId,
+            String entityType,
+            String entityId,
             String relation) {
         this.subjectType = subjectType;
         this.subjectId = subjectId;
         this.subjectRelation = subjectRelation;
-        this.objectType = objectType;
-        this.objectId = objectId;
+        this.entityType = entityType;
+        this.entityId = entityId;
         this.relation = relation;
     }
 
@@ -75,16 +75,16 @@ public class DirectoryAuthzRequest implements DirectoryRequestInterface {
         jsonObject.put("subject_type", this.subjectType);
         jsonObject.put("subject_id", this.subjectId);
         jsonObject.put("subject_relation", this.subjectRelation);
-        jsonObject.put("object_type", this.objectType);
-        jsonObject.put("object_id", this.objectId);
+        jsonObject.put("object_type", this.entityType);
+        jsonObject.put("object_id", this.entityId);
         jsonObject.put("relation", this.relation);
 
         return jsonObject;
     }
 
     public String parseToQueryParams() {
-      return String.format("?%s=%s", OBJECT_TYPE_KEY, URLEncoder.encode(objectType, StandardCharsets.UTF_8)) +
-                    String.format("&%s=%s", OBJECT_ID_KEY, URLEncoder.encode(objectId, StandardCharsets.UTF_8)) +
+      return String.format("?%s=%s", ENTITY_TYPE_KEY, URLEncoder.encode(entityType, StandardCharsets.UTF_8)) +
+                    String.format("&%s=%s", ENTITY_ID_KEY, URLEncoder.encode(entityId, StandardCharsets.UTF_8)) +
                     String.format("&%s=%s", RELATION_KEY, URLEncoder.encode(relation, StandardCharsets.UTF_8)) +
                     String.format("&%s=%s", SUBJECT_TYPE_KEY, URLEncoder.encode(subjectType, StandardCharsets.UTF_8)) +
                     String.format("&%s=%s", SUBJECT_ID_KEY, URLEncoder.encode(subjectId, StandardCharsets.UTF_8)) +
@@ -94,7 +94,7 @@ public class DirectoryAuthzRequest implements DirectoryRequestInterface {
     }
 
     public String parseToQueryParamsForGraph() {
-        return String.format("?%s=%s", OBJECT_ID_KEY, URLEncoder.encode(objectId, StandardCharsets.UTF_8)) +
+        return String.format("?%s=%s", ENTITY_ID_KEY, URLEncoder.encode(entityId, StandardCharsets.UTF_8)) +
                 String.format("&%s=%s", SUBJECT_ID_KEY, URLEncoder.encode(subjectId, StandardCharsets.UTF_8)) +
                 String.format("&%s=%s", SUBJECT_RELATION_KEY, URLEncoder.encode(subjectRelation,
                         StandardCharsets.UTF_8));
@@ -111,9 +111,9 @@ public class DirectoryAuthzRequest implements DirectoryRequestInterface {
         return subjectType;
     }
 
-    public String getObjectType() {
+    public String getEntityType() {
 
-        return objectType;
+        return entityType;
     }
 
     public String getSubjectRelation() {
@@ -126,8 +126,8 @@ public class DirectoryAuthzRequest implements DirectoryRequestInterface {
         return subjectId;
     }
 
-    public String getObjectId() {
+    public String getEntityId() {
 
-        return objectId;
+        return entityId;
     }
 }

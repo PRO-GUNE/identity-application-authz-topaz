@@ -28,7 +28,7 @@ import org.wso2.carbon.identity.application.authz.topaz.handler.util.HttpsInterf
 
 import java.io.IOException;
 
-import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.OBJECT_TYPE_KEY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.ENTITY_TYPE_KEY;
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.RELATION_KEY;
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.SUBJECT_TYPE_KEY;
 
@@ -60,7 +60,7 @@ public class TopazDirectoryHandler implements DirectoryInterface {
     public JSONObject graph(DirectoryAuthzRequest directoryAuthzRequest) {
         JSONObject jsonObject = directoryAuthzRequest.parseToJSON();
         String baseURL = TopazDirectoryConstants.HTTPS_DIRECTORY_GRAPH + String.format("/%s/%s/%s",
-                jsonObject.getString(OBJECT_TYPE_KEY),
+                jsonObject.getString(ENTITY_TYPE_KEY),
                 jsonObject.getString(RELATION_KEY),
                 jsonObject.getString(SUBJECT_TYPE_KEY));
         String queryParams = directoryAuthzRequest.parseToQueryParamsForGraph();

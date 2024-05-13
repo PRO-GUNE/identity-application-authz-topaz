@@ -29,79 +29,79 @@ public class TopazEvalTest {
         TopazManagementHandler topazManagementHandler = new TopazManagementHandler();
         // Create a new organization
         DirectoryEntityRequest directoryOrgObject = new DirectoryEntityRequest(
-                "string", "orgA", "organization", "orgA");
-        topazManagementHandler.createObject(directoryOrgObject);
+                "orgA", "organization", "orgA");
+        topazManagementHandler.createEntity(directoryOrgObject);
 
         // Create a new object
         DirectoryEntityRequest directoryUserObject = new DirectoryEntityRequest(
-                "string", "Jane Eyre", "user", "orgA-jane-eyre");
-        topazManagementHandler.createObject(directoryUserObject);
+                "Jane Eyre", "user", "orgA-jane-eyre");
+        topazManagementHandler.createEntity(directoryUserObject);
 
         // Create a new identity
         DirectoryEntityRequest directoryIdentityObject = new DirectoryEntityRequest(
-                "string", "Jane Eyre ID", "identity", "orgA-jane-eyre");
-        topazManagementHandler.createObject(directoryIdentityObject);
+                "Jane Eyre ID", "identity", "orgA-jane-eyre");
+        topazManagementHandler.createEntity(directoryIdentityObject);
 
         // Create a new group
         DirectoryEntityRequest directoryGroupObject = new DirectoryEntityRequest(
-                "string", "Group Hello", "group", "orgA-group-hello");
-        topazManagementHandler.createObject(directoryGroupObject);
+                "Group Hello", "group", "orgA-group-hello");
+        topazManagementHandler.createEntity(directoryGroupObject);
 
         // Create a new role
         DirectoryEntityRequest directoryRoleObject = new DirectoryEntityRequest(
-                "string", "Hello Reader", "role", "orgA-role-hello-resource-reader");
-        topazManagementHandler.createObject(directoryRoleObject);
+                "Hello Reader", "role", "orgA-role-hello-resource-reader");
+        topazManagementHandler.createEntity(directoryRoleObject);
 
         // Create a new resource
         DirectoryEntityRequest directoryAppObject = new DirectoryEntityRequest(
-                "string", "Hello", "resource", "orgA-hello-resource");
-        topazManagementHandler.createObject(directoryAppObject);
+                "Hello", "resource", "orgA-hello-resource");
+        topazManagementHandler.createEntity(directoryAppObject);
 
         // Create an org-user relation
         DirectoryRelationRequest directoryOrgUserRelation = new DirectoryRelationRequest(
-                "string", "orgA", "organization", "org_user",
+                "orgA", "organization", "org_user",
                 "orgA-jane-eyre", "user");
         topazManagementHandler.createRelation(directoryOrgUserRelation);
 
         // Create an org-identity relation
         DirectoryRelationRequest directoryOrgIdentityRelation = new DirectoryRelationRequest(
-                "string", "orgA", "organization", "org_identity",
+                "orgA", "organization", "org_identity",
                 "orgA-jane-eyre", "identity");
         topazManagementHandler.createRelation(directoryOrgIdentityRelation);
 
         // Create an org-role relation
         DirectoryRelationRequest directoryOrgRoleRelation = new DirectoryRelationRequest(
-                "string", "orgA", "organization", "org_role",
+                "orgA", "organization", "org_role",
                 "orgA-role-hello-resource-reader", "role");
         topazManagementHandler.createRelation(directoryOrgRoleRelation);
 
         // Create an org-resource relation
         DirectoryRelationRequest directoryOrgResourceRelation = new DirectoryRelationRequest(
-                "string", "orgA", "organization", "org_resource",
+                "orgA", "organization", "org_resource",
                 "orgA-hello-resource", "resource");
         topazManagementHandler.createRelation(directoryOrgResourceRelation);
 
         // Create an identity-user relation
         DirectoryRelationRequest directoryIdentityUserRelation = new DirectoryRelationRequest(
-                "string", "orgA-jane-eyre", "identity", "identifier",
+                "orgA-jane-eyre", "identity", "identifier",
                 "orgA-jane-eyre", "user");
         topazManagementHandler.createRelation(directoryIdentityUserRelation);
 
         // Create a user-group relation
         DirectoryRelationRequest directoryUserGroupRelation = new DirectoryRelationRequest(
-                "string", "orgA-group-hello", "group", "member",
+                "orgA-group-hello", "group", "member",
                 "orgA-jane-eyre", "user");
         topazManagementHandler.createRelation(directoryUserGroupRelation);
 
         // Create a group-role relation
         DirectoryRelationRequest directoryRoleGroupRelation = new DirectoryRelationRequest(
-                "string", "orgA-role-hello-resource-reader", "role", "assigned",
+                "orgA-role-hello-resource-reader", "role", "assigned",
                 "orgA-group-hello", "group", "member");
         topazManagementHandler.createRelation(directoryRoleGroupRelation);
 
         // Create a role-resource relation
         DirectoryRelationRequest directoryRoleAppRelation = new DirectoryRelationRequest(
-                "string", "orgA-hello-resource", "resource", "reader",
+                "orgA-hello-resource", "resource", "reader",
                 "orgA-role-hello-resource-reader", "role", "assigned");
         topazManagementHandler.createRelation(directoryRoleAppRelation);
     }

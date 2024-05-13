@@ -20,7 +20,9 @@ package org.wso2.carbon.identity.application.authz.topaz.handler.topaz;
 
 import org.json.JSONObject;
 import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryEntityRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryEntityResponse;
 import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryRelationRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryRelationResponse;
 import org.wso2.carbon.identity.application.authz.topaz.handler.models.ManagementInterface;
 import org.wso2.carbon.identity.application.authz.topaz.handler.util.HttpsHandler;
 
@@ -42,14 +44,14 @@ public class TopazManagementHandler implements ManagementInterface {
     }
 
     @Override
-    public DirectoryRelationRequest getRelation(DirectoryRelationRequest directoryRelationRequest) {
+    public DirectoryRelationResponse getRelation(DirectoryRelationRequest directoryRelationRequest) {
         String queryParams = directoryRelationRequest.parseToQueryParams();
         String url = HTTPS_DIRECTORY_RELATION + queryParams;
 
         try {
             String response =  httpsHandler.sendGETRequest(url);
             JSONObject directoryRelationJSON = new JSONObject(response);
-            return new DirectoryRelationRequest(directoryRelationJSON);
+            return directoryRelationRequest.getResponse(directoryRelationJSON);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -80,21 +82,21 @@ public class TopazManagementHandler implements ManagementInterface {
     }
 
     @Override
-    public DirectoryEntityRequest getObject(DirectoryEntityRequest directoryEntityRequest) {
+    public DirectoryEntityResponse getEntity(DirectoryEntityRequest directoryEntityRequest) {
         String pathParams = directoryEntityRequest.parseToPathParams();
         String url = HTTPS_DIRECTORY_OBJECT + pathParams;
 
         try {
             String response = httpsHandler.sendGETRequest(url);
             JSONObject directoryObjectJSON = new JSONObject(response);
-            return new DirectoryEntityRequest(directoryObjectJSON);
+            return directoryEntityRequest.getResponse(directoryObjectJSON);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public boolean createObject(DirectoryEntityRequest directoryEntityRequest) {
+    public boolean createEntity(DirectoryEntityRequest directoryEntityRequest) {
         JSONObject jsonObject = directoryEntityRequest.parseToJSON();
         try {
             httpsHandler.sendPOSTRequest(HTTPS_DIRECTORY_OBJECT, jsonObject);
@@ -105,7 +107,7 @@ public class TopazManagementHandler implements ManagementInterface {
     }
 
     @Override
-    public boolean deleteObject(DirectoryEntityRequest directoryEntityRequest) {
+    public boolean deleteEntity(DirectoryEntityRequest directoryEntityRequest) {
         String pathParams = directoryEntityRequest.parseToPathParams();
         String url = HTTPS_DIRECTORY_OBJECT + pathParams;
 

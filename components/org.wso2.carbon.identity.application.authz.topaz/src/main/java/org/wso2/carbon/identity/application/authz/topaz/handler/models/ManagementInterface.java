@@ -20,19 +20,21 @@ package org.wso2.carbon.identity.application.authz.topaz.handler.models;
 
 import org.json.JSONObject;
 import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryEntityRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryEntityResponse;
 import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryRelationRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryRelationResponse;
 
 /**
  * Interface for managing the entity management tasks of the topaz directory.
  */
 public interface ManagementInterface {
-    DirectoryRelationRequest getRelation(DirectoryRelationRequest directoryRelationRequest);
+    DirectoryRelationResponse getRelation(DirectoryRelationRequest directoryRelationRequest);
     boolean createRelation(DirectoryRelationRequest directoryRelationRequest);
     boolean deleteRelation(DirectoryRelationRequest directoryRelationRequest);
 
-    DirectoryEntityRequest getObject(DirectoryEntityRequest directoryEntityRequest);
-    boolean createObject(DirectoryEntityRequest directoryEntityRequest);
-    boolean deleteObject(DirectoryEntityRequest directoryEntityRequest);
+    DirectoryEntityResponse getEntity(DirectoryEntityRequest directoryEntityRequest);
+    boolean createEntity(DirectoryEntityRequest directoryEntityRequest);
+    boolean deleteEntity(DirectoryEntityRequest directoryEntityRequest);
 
     JSONObject getPolicies();
 }

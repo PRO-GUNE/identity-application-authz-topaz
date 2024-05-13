@@ -27,46 +27,56 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.DISPLAY_NAME_KEY;
-import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.ETAG_KEY;
-import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.OBJECT_ID_KEY;
-import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.OBJECT_TYPE_KEY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.ENTITY_ID_KEY;
+import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.ENTITY_TYPE_KEY;
 
 /**
  * A class to capture the objects in the Topaz directory.
  * Has the attributes that are required to create a directory object in the Topaz authorizer.
  */
 public class DirectoryEntityRequest implements DirectoryRequestInterface {
-    private final String etag;
     private final String displayName;
-    private final String objectType;
-    private final String objectId;
+    private final String entityType;
+    private final String entityId;
+    private final Object properties;
 
     /**
-     * @param etag any random string.
      * @param displayName name that the directory object is displayed with.
-     * @param objectType the type of the directory object.
-     * @param objectId the unique id of the directory object.
+     * @param entityType the type of the directory object.
+     * @param entityId the unique id of the directory object.
      */
-    public DirectoryEntityRequest(String etag, String displayName, String objectType, String objectId) {
-        this.etag = etag;
+    public DirectoryEntityRequest(String displayName, String entityType, String entityId) {
         this.displayName = displayName;
-        this.objectId = objectId;
-        this.objectType = objectType;
+        this.entityId = entityId;
+        this.entityType = entityType;
+        this.properties = new LinkedHashMap<>();
     }
 
-    public DirectoryEntityRequest(String objectType, String objectId) {
-        this.etag = "";
+    public DirectoryEntityRequest(String displayName, String entityType, String entityId,
+                                  Object properties) {
+        this.displayName = displayName;
+        this.entityId = entityId;
+        this.entityType = entityType;
+        this.properties = properties;
+    }
+
+    public DirectoryEntityRequest(String entityType, String entityId) {
         this.displayName = "";
-        this.objectId = objectId;
-        this.objectType = objectType;
+        this.entityId = entityId;
+        this.entityType = entityType;
+        this.properties = new LinkedHashMap<>();
     }
 
-    public DirectoryEntityRequest(JSONObject jsonObject) {
+    public DirectoryEntityResponse getResponse(JSONObject jsonObject) {
         JSONObject result = jsonObject.getJSONObject("result");
-        this.etag = result.getString(ETAG_KEY);
-        this.displayName = result.getString(DISPLAY_NAME_KEY);
-        this.objectId = result.getString("id");
-        this.objectType = result.getString("type");
+        DirectoryEntityResponse directoryEntityResponse = new DirectoryEntityResponse();
+
+        directoryEntityResponse.setDisplayName(result.getString(DISPLAY_NAME_KEY));
+        directoryEntityResponse.setEntityId(result.getString("id"));
+        directoryEntityResponse.setEntityType(result.getString("type"));
+        directoryEntityResponse.setProperties(result.getJSONObject("properties").toMap());
+
+        return directoryEntityResponse;
     }
 
     /**
@@ -84,10 +94,10 @@ public class DirectoryEntityRequest implements DirectoryRequestInterface {
     public JSONObject parseToJSON() {
         JSONObject jsonObject = new JSONObject();
         HashMap<String, Object> object = new LinkedHashMap<>();
-        object.put(ETAG_KEY, etag);
         object.put(DISPLAY_NAME_KEY, displayName);
-        object.put("id", objectId);
-        object.put("type", objectType);
+        object.put("id", entityId);
+        object.put("type", entityType);
+        object.put("properties", properties);
 
         jsonObject.put("object", object);
 
@@ -95,24 +105,24 @@ public class DirectoryEntityRequest implements DirectoryRequestInterface {
     }
 
     public String parseToQueryParams() {
-        String queryString = String.format("?%s=%s&%s=%s", OBJECT_TYPE_KEY, objectType, OBJECT_ID_KEY, objectId);
+        String queryString = String.format("?%s=%s&%s=%s", ENTITY_TYPE_KEY, entityType, ENTITY_ID_KEY, entityId);
         return URLEncoder.encode(queryString, StandardCharsets.UTF_8);
     }
 
     public String parseToPathParams() {
         return String.format("/%s/%s",
-                URLEncoder.encode(objectType, StandardCharsets.UTF_8),
-                URLEncoder.encode(objectId, StandardCharsets.UTF_8));
+                URLEncoder.encode(entityType, StandardCharsets.UTF_8),
+                URLEncoder.encode(entityId, StandardCharsets.UTF_8));
     }
 
-    public String getObjectType() {
+    public String getEntityType() {
 
-        return objectType;
+        return entityType;
     }
 
-    public String getObjectId() {
+    public String getEntityId() {
 
-        return objectId;
+        return entityId;
     }
 
     public String getDisplayName() {
@@ -120,8 +130,8 @@ public class DirectoryEntityRequest implements DirectoryRequestInterface {
         return displayName;
     }
 
-    public String getEtag() {
+    public Object getProperties() {
 
-        return etag;
+        return properties;
     }
 }
