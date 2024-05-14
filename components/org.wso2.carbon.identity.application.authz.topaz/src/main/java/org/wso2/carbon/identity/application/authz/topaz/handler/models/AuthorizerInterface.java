@@ -18,7 +18,9 @@
 
 package org.wso2.carbon.identity.application.authz.topaz.handler.models;
 
-import org.json.JSONObject;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.CheckAuthzResponse;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DecisionTreeAuthzResponse;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.QueryAuthzResponse;
 
 /**
  * Interface used to implement the Topaz Authorizer.
@@ -32,7 +34,7 @@ public interface AuthorizerInterface {
      * @param isContextObject the request sent to the Authorizer and evaluated.
      * @return a list of the decisions and the result of the evaluation of each decision.
      */
-    JSONObject check(AuthorizerRequestInterface isContextObject);
+    CheckAuthzResponse check(AuthorizerRequestInterface isContextObject);
 
     /**
      * Most abstract endpoint provided by the topaz authorizer.
@@ -41,7 +43,7 @@ public interface AuthorizerInterface {
      * @param queryContextObject the request sent to the Authorizer and evaluated.
      * @return a list of the results of the evaluation.
      */
-    JSONObject query(AuthorizerRequestInterface queryContextObject);
+    QueryAuthzResponse query(AuthorizerRequestInterface queryContextObject);
 
     /**
      * Evaluates all the policies at a given policy path for the requested decisions.
@@ -49,5 +51,5 @@ public interface AuthorizerInterface {
      * @param decisionTreeContextObject the request sent to the Authorizer and evaluated.
      * @return a list of the results of the evaluation of the requested decisions for the policies.
      */
-    JSONObject decisiontree(AuthorizerRequestInterface decisionTreeContextObject);
+    DecisionTreeAuthzResponse decisiontree(AuthorizerRequestInterface decisionTreeContextObject);
 }

@@ -18,12 +18,13 @@
 
 package org.wso2.carbon.identity.application.authz.topaz.handler.topaz;
 
-import org.json.JSONObject;
 import org.mockito.Mock;
 import org.testng.annotations.Test;
 import org.wso2.carbon.identity.application.authz.topaz.handler.core.CheckAuthzRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.CheckAuthzResponse;
 import org.wso2.carbon.identity.application.authz.topaz.handler.core.DecisionTreeAuthzRequest;
 import org.wso2.carbon.identity.application.authz.topaz.handler.core.QueryAuthzRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.QueryAuthzResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,9 +51,9 @@ class TopazAuthorizerHandlerTest extends TopazEvalTest {
 
         CheckAuthzRequest isPolicyContextObject = new CheckAuthzRequest(
                 IDENTITY_SUB, "orgA-jane-eyre", hashMap, decisions, "policies.GET.app.__id");
-        JSONObject res = topazAuthorizerHandler.check(isPolicyContextObject);
-        JSONObject decision = (JSONObject) res.getJSONArray("decisions").get(0);
-        assertTrue(decision.getBoolean("is"));
+        CheckAuthzResponse res = topazAuthorizerHandler.check(isPolicyContextObject);
+        boolean decision = res.getDecisions().get("allowed");
+        assertTrue(decision);
     }
 
     @Test
@@ -74,8 +75,8 @@ class TopazAuthorizerHandlerTest extends TopazEvalTest {
         QueryAuthzRequest queryAuthzRequest = new QueryAuthzRequest(
                 IDENTITY_SUB, "orgA-jane-eyre", hashMap, query, input,
                 decisions, "", false, false);
-        JSONObject res = topazAuthorizerHandler.query(queryAuthzRequest);
-        assertNotEquals(res.getJSONObject("response").toString(), "[]");
+        QueryAuthzResponse res = topazAuthorizerHandler.query(queryAuthzRequest);
+        assertNotEquals(res.getResponse().get("response").toString(), "[]");
     }
 
     @Test

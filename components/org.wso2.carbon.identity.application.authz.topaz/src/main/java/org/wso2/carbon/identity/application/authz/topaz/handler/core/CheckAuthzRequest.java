@@ -21,9 +21,9 @@ package org.wso2.carbon.identity.application.authz.topaz.handler.core;
 import org.json.JSONObject;
 import org.wso2.carbon.identity.application.authz.topaz.handler.models.AuthorizerRequestInterface;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.IDENTITY_CONTEXT;
 import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKeyConstants.POLICY_CONTEXT;
@@ -35,8 +35,8 @@ import static org.wso2.carbon.identity.application.authz.topaz.constants.TopazKe
 public class CheckAuthzRequest implements AuthorizerRequestInterface {
     private final String identityType;
     private final String identityId;
-    private final HashMap<String, Object> resourceContext;
-    private final ArrayList<String> decisions;
+    private final Object resourceContext;
+    private final List<String> decisions;
     private final String policyPath;
 
     /**
@@ -50,8 +50,8 @@ public class CheckAuthzRequest implements AuthorizerRequestInterface {
      * @param policyPath the base path of the policy. For the is endpoint this will be the path of the policy that is
      *                   evaluated. For the decisiontree endpoint this will be base path of the evaluated policies.
      */
-    public CheckAuthzRequest(String identityType, String identityId, HashMap<String, Object> resourceContext,
-                             ArrayList<String> decisions, String policyPath) {
+    public CheckAuthzRequest(String identityType, String identityId, Object resourceContext,
+                             List<String> decisions, String policyPath) {
         this.identityType = identityType;
         this.identityId = identityId;
         this.resourceContext = resourceContext;
@@ -97,12 +97,12 @@ public class CheckAuthzRequest implements AuthorizerRequestInterface {
         return jsonObject;
     }
 
-    public ArrayList<String> getDecisions() {
+    public List<String> getDecisions() {
 
         return decisions;
     }
 
-    public HashMap<String, Object> getResourceContext() {
+    public Object getResourceContext() {
 
         return resourceContext;
     }

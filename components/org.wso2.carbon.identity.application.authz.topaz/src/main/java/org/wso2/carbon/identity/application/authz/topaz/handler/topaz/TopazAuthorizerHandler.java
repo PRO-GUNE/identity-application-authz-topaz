@@ -20,6 +20,9 @@ package org.wso2.carbon.identity.application.authz.topaz.handler.topaz;
 
 import org.json.JSONObject;
 import org.wso2.carbon.identity.application.authz.topaz.constants.TopazAuthorizerConstants;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.CheckAuthzResponse;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DecisionTreeAuthzResponse;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.QueryAuthzResponse;
 import org.wso2.carbon.identity.application.authz.topaz.handler.models.AuthorizerInterface;
 import org.wso2.carbon.identity.application.authz.topaz.handler.models.AuthorizerRequestInterface;
 import org.wso2.carbon.identity.application.authz.topaz.handler.util.HttpsHandler;
@@ -38,34 +41,46 @@ public class TopazAuthorizerHandler implements AuthorizerInterface {
     }
 
     @Override
-    public JSONObject check(AuthorizerRequestInterface isContextObject) {
+    public CheckAuthzResponse check(AuthorizerRequestInterface isContextObject) {
         JSONObject jsonObject = isContextObject.parseToJSON();
         try {
             String response = httpsHandler.sendPOSTRequest(TopazAuthorizerConstants.HTTPS_AUTHORIZER_CHECK, jsonObject);
-            return new JSONObject(response);
+            CheckAuthzResponse checkAuthzResponse = new CheckAuthzResponse();
+            JSONObject res = new JSONObject(response);
+
+            checkAuthzResponse.setDecisions(res.getJSONArray("decisions"));
+            return checkAuthzResponse;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public JSONObject query(AuthorizerRequestInterface queryContextObject) {
+    public QueryAuthzResponse query(AuthorizerRequestInterface queryContextObject) {
         JSONObject jsonObject = queryContextObject.parseToJSON();
         try {
             String response = httpsHandler.sendPOSTRequest(TopazAuthorizerConstants.HTTPS_AUTHORIZER_QUERY, jsonObject);
-            return new JSONObject(response);
+            JSONObject res = new JSONObject(response);
+            QueryAuthzResponse queryAuthzResponse = new QueryAuthzResponse();
+            queryAuthzResponse.setResponse(res.toMap());
+
+            return queryAuthzResponse;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public JSONObject decisiontree(AuthorizerRequestInterface decisionTreeContextObject) {
+    public DecisionTreeAuthzResponse decisiontree(AuthorizerRequestInterface decisionTreeContextObject) {
         JSONObject jsonObject = decisionTreeContextObject.parseToJSON();
         try {
             String response = httpsHandler.sendPOSTRequest(TopazAuthorizerConstants.HTTPS_AUTHORIZER_DECISIONTREE,
                     jsonObject);
-            return new JSONObject(response);
+            JSONObject res = new JSONObject(response);
+            DecisionTreeAuthzResponse decisionTreeAuthzResponse = new DecisionTreeAuthzResponse();
+            decisionTreeAuthzResponse.setResponse(res.toMap());
+
+            return decisionTreeAuthzResponse;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

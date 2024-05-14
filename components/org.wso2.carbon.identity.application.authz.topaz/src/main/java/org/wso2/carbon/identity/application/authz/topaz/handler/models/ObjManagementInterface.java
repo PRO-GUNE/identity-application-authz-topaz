@@ -27,6 +27,7 @@ import org.wso2.carbon.identity.application.authz.topaz.handler.core.QueryAuthzR
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Interface for managing object classes used for management and evaluation.
@@ -62,8 +63,8 @@ public interface ObjManagementInterface {
     CheckAuthzRequest createIsContextObject(
             String identityType,
             String identityId,
-            HashMap<String, Object> resourceContext,
-            ArrayList<String> decisions,
+            Object resourceContext,
+            List<String> decisions,
             String policyPath);
 
     QueryAuthzRequest createQueryContextObject(

@@ -18,8 +18,8 @@
 
 package org.wso2.carbon.identity.application.authz.topaz.handler.models;
 
-import org.json.JSONObject;
 import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryAuthzRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryGraphAuthzResponse;
 
 /**
  * Interface used to implement the Topaz Directory.
@@ -42,5 +42,5 @@ public interface DirectoryInterface {
      * @param directoryAuthzRequest Request to be checked using the directory graph endpoint
      * @return a list output of all the values that conform to the requests
      */
-    JSONObject graph(DirectoryAuthzRequest directoryAuthzRequest);
+    DirectoryGraphAuthzResponse graph(DirectoryAuthzRequest directoryAuthzRequest);
 }

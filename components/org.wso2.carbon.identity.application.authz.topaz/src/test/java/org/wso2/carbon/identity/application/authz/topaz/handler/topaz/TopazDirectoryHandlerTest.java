@@ -18,10 +18,10 @@
 
 package org.wso2.carbon.identity.application.authz.topaz.handler.topaz;
 
-import org.json.JSONObject;
 import org.mockito.Mock;
 import org.testng.annotations.Test;
 import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryAuthzRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryGraphAuthzResponse;
 
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
@@ -44,7 +44,7 @@ class TopazDirectoryHandlerTest extends TopazEvalTest {
         DirectoryAuthzRequest directoryAuthzRequest = new DirectoryAuthzRequest(
                 "user", "", "", "resource",
                 "orgA-hello-resource", "reader");
-        JSONObject res = topazDirectoryHandler.graph(directoryAuthzRequest);
-        assertNotEquals(res.get("results").toString(), "[]");
+        DirectoryGraphAuthzResponse res = topazDirectoryHandler.graph(directoryAuthzRequest);
+        assertNotEquals(res.getResults().toString(), "[]");
     }
 }

@@ -28,6 +28,7 @@ import org.wso2.carbon.identity.application.authz.topaz.handler.models.ObjManage
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Class to handle creating objects used for management and evaluation.
@@ -73,7 +74,7 @@ public class ObjManagementHandler implements ObjManagementInterface {
 
     @Override
     public CheckAuthzRequest createIsContextObject(String identityType, String identityId,
-                                                   HashMap<String, Object> resourceContext, ArrayList<String> decisions,
+                                                   Object resourceContext, List<String> decisions,
                                                    String policyPath) {
 
         return new CheckAuthzRequest(identityType, identityId, resourceContext, decisions, policyPath);

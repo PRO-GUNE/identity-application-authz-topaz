@@ -22,6 +22,7 @@ package org.wso2.carbon.identity.application.authz.topaz.handler.topaz;
 import org.json.JSONObject;
 import org.wso2.carbon.identity.application.authz.topaz.constants.TopazDirectoryConstants;
 import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryAuthzRequest;
+import org.wso2.carbon.identity.application.authz.topaz.handler.core.DirectoryGraphAuthzResponse;
 import org.wso2.carbon.identity.application.authz.topaz.handler.models.DirectoryInterface;
 import org.wso2.carbon.identity.application.authz.topaz.handler.util.HttpsHandler;
 import org.wso2.carbon.identity.application.authz.topaz.handler.util.HttpsInterface;
@@ -57,7 +58,7 @@ public class TopazDirectoryHandler implements DirectoryInterface {
     }
 
     @Override
-    public JSONObject graph(DirectoryAuthzRequest directoryAuthzRequest) {
+    public DirectoryGraphAuthzResponse graph(DirectoryAuthzRequest directoryAuthzRequest) {
         JSONObject jsonObject = directoryAuthzRequest.parseToJSON();
         String baseURL = TopazDirectoryConstants.HTTPS_DIRECTORY_GRAPH + String.format("/%s/%s/%s",
                 jsonObject.getString(ENTITY_TYPE_KEY),
@@ -68,7 +69,11 @@ public class TopazDirectoryHandler implements DirectoryInterface {
         String url = baseURL + queryParams;
         try {
             String response = httpsHandler.sendGETRequest(url);
-            return new JSONObject(response);
+            JSONObject res = new JSONObject(response);
+            DirectoryGraphAuthzResponse directoryGraphAuthzResponse = new DirectoryGraphAuthzResponse();
+            directoryGraphAuthzResponse.setResults(res.getJSONArray("results").toList());
+
+            return directoryGraphAuthzResponse;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
